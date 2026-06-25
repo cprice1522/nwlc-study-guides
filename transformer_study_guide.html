@@ -6,1579 +6,400 @@
 <title>Transformer Study Guide — NWLC</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap');
-
-  :root {
-    --red: #8B1A1A;
-    --dark: #1a1a1a;
-    --mid: #2e2e2e;
-    --light-gray: #f0f0f0;
-    --accent: #c8a84b;
-    --white: #ffffff;
-    --correct: #2d6a4f;
-    --border: #d0d0d0;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Source Sans 3', sans-serif;
-    background: var(--light-gray);
-    color: var(--dark);
-    font-size: 16px;
-    line-height: 1.6;
-  }
-
-  header {
-    background: var(--red);
-    color: var(--white);
-    padding: 2rem 2.5rem 1.5rem;
-    border-bottom: 5px solid var(--accent);
-  }
-
-  header .eyebrow {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.4rem;
-  }
-
-  header h1 {
-    font-family: 'Oswald', sans-serif;
-    font-size: 2.4rem;
-    font-weight: 700;
-    line-height: 1.1;
-  }
-
-  header p {
-    margin-top: 0.5rem;
-    font-size: 0.95rem;
-    opacity: 0.85;
-  }
-
-  nav {
-    display: flex;
-    gap: 1rem;
-    padding: 1rem 2.5rem;
-    background: var(--dark);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    flex-wrap: wrap;
-  }
-
-  nav button {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.5rem 1.2rem;
-    border: 2px solid var(--accent);
-    background: transparent;
-    color: var(--accent);
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-
-  nav button.active, nav button:hover {
-    background: var(--accent);
-    color: var(--dark);
-  }
-
-  main {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 0 1.5rem 4rem;
-  }
-
-  .section-label {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 1.5rem;
-    padding-bottom: 0.4rem;
-    border-bottom: 3px solid var(--red);
-  }
-
-  .question-block {
-    background: var(--white);
-    border-left: 4px solid var(--border);
-    padding: 1.2rem 1.5rem;
-    margin-bottom: 1.2rem;
-    transition: border-color 0.2s;
-  }
-
-  .question-block:hover { border-left-color: var(--red); }
-
-  .question-block .q-num {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.75rem;
-    color: var(--red);
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.4rem;
-  }
-
-  .question-block p {
-    font-weight: 600;
-    margin-bottom: 0.8rem;
-    font-size: 1rem;
-  }
-
-  .options label {
-    display: block;
-    padding: 0.45rem 0.7rem;
-    margin-bottom: 0.3rem;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: background 0.15s;
-    font-size: 0.95rem;
-  }
-
-  .options label:hover { background: #f5eded; }
-  .options input[type=radio] { margin-right: 0.6rem; accent-color: var(--red); }
-
-  /* Answer Key */
-  .answer-key { display: none; }
-  .answer-key.visible { display: block; }
-
-  .answer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 0.6rem;
-  }
-
-  .answer-item {
-    background: var(--white);
-    padding: 0.6rem 0.8rem;
-    border-left: 3px solid var(--correct);
-    font-size: 0.9rem;
-    font-family: 'Source Sans 3', sans-serif;
-  }
-
-  .answer-item span {
-    font-family: 'Oswald', sans-serif;
-    font-weight: 700;
-    color: var(--red);
-    font-size: 0.75rem;
-    display: block;
-    letter-spacing: 0.05em;
-  }
-
-  .page { display: none; }
-  .page.active { display: block; }
-
-  .toggle-key-btn {
-    background: var(--red);
-    color: var(--white);
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.9rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.75rem 2rem;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 2rem;
-    transition: background 0.2s;
-  }
-
-  .toggle-key-btn:hover { background: #6a1212; }
-
-  .key-section-label {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--correct);
-    margin: 1.2rem 0 0.6rem;
-    padding-bottom: 0.3rem;
-    border-bottom: 2px solid var(--correct);
-  }
-
-  footer {
-    text-align: center;
-    font-size: 0.8rem;
-    color: #777;
-    padding: 1.5rem;
-    background: var(--dark);
-    color: #aaa;
-  }
+  :root { --red:#8B1A1A;--dark:#1a1a1a;--light-gray:#f0f0f0;--accent:#c8a84b;--white:#ffffff;--correct:#2d6a4f;--border:#d0d0d0; }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Source Sans 3',sans-serif;background:var(--light-gray);color:var(--dark);font-size:16px;line-height:1.6;}
+  header{background:var(--red);color:var(--white);padding:2rem 2.5rem 1.5rem;border-bottom:5px solid var(--accent);}
+  header .eyebrow{font-family:'Oswald',sans-serif;font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:0.4rem;}
+  header h1{font-family:'Oswald',sans-serif;font-size:2.4rem;font-weight:700;line-height:1.1;}
+  header p{margin-top:0.5rem;font-size:0.95rem;opacity:0.85;}
+  nav{display:flex;gap:1rem;padding:1rem 2.5rem;background:var(--dark);position:sticky;top:0;z-index:100;flex-wrap:wrap;}
+  nav button{font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.5rem 1.2rem;border:2px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;transition:background 0.2s,color 0.2s;}
+  nav button.active,nav button:hover{background:var(--accent);color:var(--dark);}
+  main{max-width:900px;margin:2rem auto;padding:0 1.5rem 4rem;}
+  .section-label{font-family:'Oswald',sans-serif;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;padding-bottom:0.4rem;border-bottom:3px solid var(--red);}
+  .question-block{background:var(--white);border-left:4px solid var(--border);padding:1.2rem 1.5rem;margin-bottom:1.2rem;transition:border-color 0.2s;}
+  .question-block:hover{border-left-color:var(--red);}
+  .question-block .q-num{font-family:'Oswald',sans-serif;font-size:0.75rem;color:var(--red);font-weight:600;letter-spacing:0.1em;margin-bottom:0.4rem;}
+  .question-block p{font-weight:600;margin-bottom:0.8rem;font-size:1rem;}
+  .math-hint{background:#fff8e1;border-left:3px solid var(--accent);padding:0.5rem 0.75rem;margin-bottom:0.75rem;font-size:0.88rem;color:#5a4000;border-radius:2px;}
+  .id-hint{background:#e8f4f8;border-left:3px solid #2980b9;padding:0.5rem 0.75rem;margin-bottom:0.75rem;font-size:0.88rem;color:#1a3a4a;border-radius:2px;}
+  .options label{display:block;padding:0.45rem 0.7rem;margin-bottom:0.3rem;cursor:pointer;border-radius:2px;transition:background 0.15s;font-size:0.95rem;}
+  .options label:hover{background:#f5eded;}
+  .options input[type=radio]{margin-right:0.6rem;accent-color:var(--red);}
+  .answer-key{display:none;}
+  .answer-key.visible{display:block;}
+  .answer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.6rem;}
+  .answer-item{background:var(--white);padding:0.6rem 0.8rem;border-left:3px solid var(--correct);font-size:0.88rem;}
+  .answer-item span{font-family:'Oswald',sans-serif;font-weight:700;color:var(--red);font-size:0.75rem;display:block;letter-spacing:0.05em;}
+  .page{display:none;}
+  .page.active{display:block;}
+  .toggle-key-btn{background:var(--red);color:var(--white);font-family:'Oswald',sans-serif;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.75rem 2rem;border:none;cursor:pointer;margin-bottom:2rem;}
+  .toggle-key-btn:hover{background:#6a1212;}
+  .key-section-label{font-family:'Oswald',sans-serif;font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--correct);margin:1.2rem 0 0.6rem;padding-bottom:0.3rem;border-bottom:2px solid var(--correct);}
+  footer{text-align:center;padding:1.5rem;background:var(--dark);color:#aaa;font-size:0.8rem;}
 </style>
 </head>
 <body>
-
 <header>
   <div class="eyebrow">Northwest Lineman College · Electrical Lineworker Program</div>
   <h1>Transformer Study Guide</h1>
-  <p>100 Questions covering Identification · Anatomy · Theory · Operations</p>
+  <p>100 Questions — Identification · Anatomy · Theory · Operations</p>
 </header>
-
 <nav>
-  <button class="active" onclick="showPage('questions')">Study Questions</button>
-  <button onclick="showPage('key')">Answer Key</button>
+  <button class="active" onclick="showPage('questions',this)">Study Questions</button>
+  <button onclick="showPage('key',this)">Answer Key</button>
 </nav>
-
 <main>
 
-<!-- ========== QUESTIONS PAGE ========== -->
 <div class="page active" id="questions">
-  <div class="section-label">Section 1 — Transformer Identification (Q 1–20)</div>
-
-  <!-- Q1 -->
-  <div class="question-block">
-    <div class="q-num">Question 1</div>
-    <p>Which side of a transformer is considered the "source" side?</p>
-    <div class="options">
-      <label><input type="radio" name="q1"> a. The secondary side</label>
-      <label><input type="radio" name="q1"> b. The load side</label>
-      <label><input type="radio" name="q1"> c. The primary side</label>
-      <label><input type="radio" name="q1"> d. The customer's side</label>
-    </div>
-  </div>
-
-  <!-- Q2 -->
-  <div class="question-block">
-    <div class="q-num">Question 2</div>
-    <p>The secondary side of a transformer connects to:</p>
-    <div class="options">
-      <label><input type="radio" name="q2"> a. The source</label>
-      <label><input type="radio" name="q2"> b. The generating station</label>
-      <label><input type="radio" name="q2"> c. The load or customer</label>
-      <label><input type="radio" name="q2"> d. The high-voltage transmission line</label>
-    </div>
-  </div>
-
-  <!-- Q3 -->
-  <div class="question-block">
-    <div class="q-num">Question 3</div>
-    <p>A padmount transformer receives its feed from:</p>
-    <div class="options">
-      <label><input type="radio" name="q3"> a. An overhead conductor</label>
-      <label><input type="radio" name="q3"> b. An underground conductor</label>
-      <label><input type="radio" name="q3"> c. A direct service drop</label>
-      <label><input type="radio" name="q3"> d. Hangar bolts on a pole</label>
-    </div>
-  </div>
-
-  <!-- Q4 -->
-  <div class="question-block">
-    <div class="q-num">Question 4</div>
-    <p>Which statement about conventional pole-mounted transformers is true?</p>
-    <div class="options">
-      <label><input type="radio" name="q4"> a. They use internal cutouts for surge suppression</label>
-      <label><input type="radio" name="q4"> b. They have internal breakers between windings and primary bushings</label>
-      <label><input type="radio" name="q4"> c. They use an external fused device to protect against fault current</label>
-      <label><input type="radio" name="q4"> d. They are protected by Bay-O-Net fuses internally</label>
-    </div>
-  </div>
-
-  <!-- Q5 -->
-  <div class="question-block">
-    <div class="q-num">Question 5</div>
-    <p>What type of transformer is a CSP?</p>
-    <div class="options">
-      <label><input type="radio" name="q5"> a. Completely Self-Powered</label>
-      <label><input type="radio" name="q5"> b. Completely Self-Protected</label>
-      <label><input type="radio" name="q5"> c. Current-Sensing Portable</label>
-      <label><input type="radio" name="q5"> d. Conventional Single-Phase Padmount</label>
-    </div>
-  </div>
-
-  <!-- Q6 -->
-  <div class="question-block">
-    <div class="q-num">Question 6</div>
-    <p>A CSP transformer is internally protected by:</p>
-    <div class="options">
-      <label><input type="radio" name="q6"> a. A voltage-limiting fuse</label>
-      <label><input type="radio" name="q6"> b. A Bay-O-Net fuse</label>
-      <label><input type="radio" name="q6"> c. A current-limiting fuse</label>
-      <label><input type="radio" name="q6"> d. An external dropout cutout</label>
-    </div>
-  </div>
-
-  <!-- Q7 -->
-  <div class="question-block">
-    <div class="q-num">Question 7</div>
-    <p>Which type of transformer has fuses located internally but operated externally?</p>
-    <div class="options">
-      <label><input type="radio" name="q7"> a. Conventional transformers</label>
-      <label><input type="radio" name="q7"> b. CSP transformers</label>
-      <label><input type="radio" name="q7"> c. Padmount transformers</label>
-      <label><input type="radio" name="q7"> d. Pole-mounted transformers</label>
-    </div>
-  </div>
-
-  <!-- Q8 -->
-  <div class="question-block">
-    <div class="q-num">Question 8</div>
-    <p>On a padmount transformer, H1A and H1B are:</p>
-    <div class="options">
-      <label><input type="radio" name="q8"> a. The secondary low-voltage bushings</label>
-      <label><input type="radio" name="q8"> b. The primary bushings on a padmount transformer</label>
-      <label><input type="radio" name="q8"> c. The primary bushings on a pole-bolted transformer</label>
-      <label><input type="radio" name="q8"> d. Neutral bushings</label>
-    </div>
-  </div>
-
-  <!-- Q9 -->
-  <div class="question-block">
-    <div class="q-num">Question 9</div>
-    <p>The H1 bushing is always located:</p>
-    <div class="options">
-      <label><input type="radio" name="q9"> a. On the left when facing the transformer</label>
-      <label><input type="radio" name="q9"> b. On the bottom of the case</label>
-      <label><input type="radio" name="q9"> c. On the right when facing the transformer</label>
-      <label><input type="radio" name="q9"> d. Adjacent to the pressure relief valve</label>
-    </div>
-  </div>
-
-  <!-- Q10 -->
-  <div class="question-block">
-    <div class="q-num">Question 10</div>
-    <p>The labeling of the secondary bushings changes based on:</p>
-    <div class="options">
-      <label><input type="radio" name="q10"> a. The kVA rating</label>
-      <label><input type="radio" name="q10"> b. The voltage class</label>
-      <label><input type="radio" name="q10"> c. Polarity</label>
-      <label><input type="radio" name="q10"> d. The manufacturer</label>
-    </div>
-  </div>
-
-  <!-- Q11 -->
-  <div class="question-block">
-    <div class="q-num">Question 11</div>
-    <p>When transformers are banked together, the combined kVA rating is:</p>
-    <div class="options">
-      <label><input type="radio" name="q11"> a. The average of the individual ratings</label>
-      <label><input type="radio" name="q11"> b. The rating of the largest transformer in the bank</label>
-      <label><input type="radio" name="q11"> c. The sum of the individual transformer ratings</label>
-      <label><input type="radio" name="q11"> d. Divided by the number of transformers</label>
-    </div>
-  </div>
-
-  <!-- Q12 -->
-  <div class="question-block">
-    <div class="q-num">Question 12</div>
-    <p>An average-size home typically draws a peak load of approximately:</p>
-    <div class="options">
-      <label><input type="radio" name="q12"> a. Less than 1 kVA</label>
-      <label><input type="radio" name="q12"> b. 10–15 kVA</label>
-      <label><input type="radio" name="q12"> c. 50 kVA or more</label>
-      <label><input type="radio" name="q12"> d. 100 kVA</label>
-    </div>
-  </div>
-
-  <!-- Q13 -->
-  <div class="question-block">
-    <div class="q-num">Question 13</div>
-    <p>Which of the following best describes a conventional overhead transformer's protection method?</p>
-    <div class="options">
-      <label><input type="radio" name="q13"> a. Internal fuse that is operated externally</label>
-      <label><input type="radio" name="q13"> b. Bay-O-Net fuse to isolate between H1A and H1B</label>
-      <label><input type="radio" name="q13"> c. External fused device (e.g., dropout cutout) to protect against fault current</label>
-      <label><input type="radio" name="q13"> d. Internal current-limiting fuse</label>
-    </div>
-  </div>
-
-  <!-- Q14 -->
-  <div class="question-block">
-    <div class="q-num">Question 14</div>
-    <p>The kVA rating of a transformer refers to:</p>
-    <div class="options">
-      <label><input type="radio" name="q14"> a. The voltage rating of the input winding</label>
-      <label><input type="radio" name="q14"> b. The amperage rating of the output winding</label>
-      <label><input type="radio" name="q14"> c. The apparent power capacity of the transformer</label>
-      <label><input type="radio" name="q14"> d. The resistance of the core material</label>
-    </div>
-  </div>
-
-  <!-- Q15 -->
-  <div class="question-block">
-    <div class="q-num">Question 15</div>
-    <p>Which transformer type is most commonly mounted on a concrete pad and supplied via underground cable?</p>
-    <div class="options">
-      <label><input type="radio" name="q15"> a. CSP transformer</label>
-      <label><input type="radio" name="q15"> b. Conventional pole-mounted</label>
-      <label><input type="radio" name="q15"> c. Padmount transformer</label>
-      <label><input type="radio" name="q15"> d. Distribution substation transformer</label>
-    </div>
-  </div>
-
-  <!-- Q16 -->
-  <div class="question-block">
-    <div class="q-num">Question 16</div>
-    <p>Transformers operate on which type of electrical system?</p>
-    <div class="options">
-      <label><input type="radio" name="q16"> a. Direct current (DC) only</label>
-      <label><input type="radio" name="q16"> b. Both AC and DC equally</label>
-      <label><input type="radio" name="q16"> c. Alternating current (AC)</label>
-      <label><input type="radio" name="q16"> d. Pulsating DC only</label>
-    </div>
-  </div>
-
-  <!-- Q17 -->
-  <div class="question-block">
-    <div class="q-num">Question 17</div>
-    <p>Bay-O-Net fuses in padmount transformers are used to:</p>
-    <div class="options">
-      <label><input type="radio" name="q17"> a. Protect surge arresters</label>
-      <label><input type="radio" name="q17"> b. Isolate between H1A and H1B</label>
-      <label><input type="radio" name="q17"> c. Limit secondary fault current</label>
-      <label><input type="radio" name="q17"> d. Regulate output voltage</label>
-    </div>
-  </div>
-
-  <!-- Q18 -->
-  <div class="question-block">
-    <div class="q-num">Question 18</div>
-    <p>Which statement about the primary bushings of a transformer is accurate?</p>
-    <div class="options">
-      <label><input type="radio" name="q18"> a. They always have less insulation than the secondary</label>
-      <label><input type="radio" name="q18"> b. They connect to the high-voltage source side</label>
-      <label><input type="radio" name="q18"> c. They are labeled X1, X2, X3</label>
-      <label><input type="radio" name="q18"> d. They are always on the right side of the case</label>
-    </div>
-  </div>
-
-  <!-- Q19 -->
-  <div class="question-block">
-    <div class="q-num">Question 19</div>
-    <p>A red indicator light on a CSP transformer typically signals:</p>
-    <div class="options">
-      <label><input type="radio" name="q19"> a. Normal operation</label>
-      <label><input type="radio" name="q19"> b. Overvoltage condition</label>
-      <label><input type="radio" name="q19"> c. Abnormal loading conditions</label>
-      <label><input type="radio" name="q19"> d. Pressure relief valve open</label>
-    </div>
-  </div>
-
-  <!-- Q20 -->
-  <div class="question-block">
-    <div class="q-num">Question 20</div>
-    <p>Transformers physically attached to a pole using hangar bolts are called:</p>
-    <div class="options">
-      <label><input type="radio" name="q20"> a. CSP transformers</label>
-      <label><input type="radio" name="q20"> b. Padmount transformers</label>
-      <label><input type="radio" name="q20"> c. Pole-bolted transformers</label>
-      <label><input type="radio" name="q20"> d. Distribution substation units</label>
-    </div>
-  </div>
-
-  <div class="section-label" style="margin-top:2rem;">Section 2 — Transformer Anatomy (Q 21–50)</div>
-
-  <!-- Q21 -->
-  <div class="question-block">
-    <div class="q-num">Question 21</div>
-    <p>What is the primary purpose of the transformer core?</p>
-    <div class="options">
-      <label><input type="radio" name="q21"> a. Maintain the form of concentrically wound coils</label>
-      <label><input type="radio" name="q21"> b. Concentrate the magnetic lines of flux to improve efficiency</label>
-      <label><input type="radio" name="q21"> c. Suspend and isolate the coils inside the case</label>
-      <label><input type="radio" name="q21"> d. Provide an electrical connection between the two windings</label>
-    </div>
-  </div>
-
-  <!-- Q22 -->
-  <div class="question-block">
-    <div class="q-num">Question 22</div>
-    <p>The most popular conductor material used for transformer windings is:</p>
-    <div class="options">
-      <label><input type="radio" name="q22"> a. Aluminum</label>
-      <label><input type="radio" name="q22"> b. Amorphous steel</label>
-      <label><input type="radio" name="q22"> c. Copper</label>
-      <label><input type="radio" name="q22"> d. Silicon-oriented steel</label>
-    </div>
-  </div>
-
-  <!-- Q23 -->
-  <div class="question-block">
-    <div class="q-num">Question 23</div>
-    <p>Compared to the secondary winding, the primary winding has:</p>
-    <div class="options">
-      <label><input type="radio" name="q23"> a. Larger conductors</label>
-      <label><input type="radio" name="q23"> b. Smaller diameter wire</label>
-      <label><input type="radio" name="q23"> c. Silicon coating for efficiency</label>
-      <label><input type="radio" name="q23"> d. Laminated aluminum sheets</label>
-    </div>
-  </div>
-
-  <!-- Q24 -->
-  <div class="question-block">
-    <div class="q-num">Question 24</div>
-    <p>In relation to windings, what does the label "B" on a terminal refer to?</p>
-    <div class="options">
-      <label><input type="radio" name="q24"> a. A primary winding end connecting to H-bushings</label>
-      <label><input type="radio" name="q24"> b. An end of the secondary winding where it attaches to the low-voltage terminals</label>
-      <label><input type="radio" name="q24"> c. The end of the high-voltage winding connecting to the breaker</label>
-      <label><input type="radio" name="q24"> d. The point where the core/coil assembly mounts inside the case</label>
-    </div>
-  </div>
-
-  <!-- Q25 -->
-  <div class="question-block">
-    <div class="q-num">Question 25</div>
-    <p>A standard distribution transformer cools itself by:</p>
-    <div class="options">
-      <label><input type="radio" name="q25"> a. Ambient air temperature alone</label>
-      <label><input type="radio" name="q25"> b. An internal electric fan</label>
-      <label><input type="radio" name="q25"> c. Circulating oil by convection</label>
-      <label><input type="radio" name="q25"> d. A forced oil pump system</label>
-    </div>
-  </div>
-
-  <!-- Q26 -->
-  <div class="question-block">
-    <div class="q-num">Question 26</div>
-    <p>What does "non-PCB" mean on a transformer nameplate?</p>
-    <div class="options">
-      <label><input type="radio" name="q26"> a. The windings use non-coated paper insulation</label>
-      <label><input type="radio" name="q26"> b. The primary winding direction is non-standard</label>
-      <label><input type="radio" name="q26"> c. The newer insulating fluid does not contain the harmful substance (PCB)</label>
-      <label><input type="radio" name="q26"> d. The core uses non-crystalline (amorphous) material</label>
-    </div>
-  </div>
-
-  <!-- Q27 -->
-  <div class="question-block">
-    <div class="q-num">Question 27</div>
-    <p>The pressure relief valve on a transformer is used to:</p>
-    <div class="options">
-      <label><input type="radio" name="q27"> a. Regulate oil viscosity</label>
-      <label><input type="radio" name="q27"> b. Release internal pressure buildup that could rupture the tank</label>
-      <label><input type="radio" name="q27"> c. Control cooling convection flow</label>
-      <label><input type="radio" name="q27"> d. Indicate oil level</label>
-    </div>
-  </div>
-
-  <!-- Q28 -->
-  <div class="question-block">
-    <div class="q-num">Question 28</div>
-    <p>The core of a transformer is typically constructed of:</p>
-    <div class="options">
-      <label><input type="radio" name="q28"> a. Solid copper bars</label>
-      <label><input type="radio" name="q28"> b. Aluminum tubes</label>
-      <label><input type="radio" name="q28"> c. Thin, laminated silicon-steel sheets</label>
-      <label><input type="radio" name="q28"> d. Ceramic composite rings</label>
-    </div>
-  </div>
-
-  <!-- Q29 -->
-  <div class="question-block">
-    <div class="q-num">Question 29</div>
-    <p>Why are transformer core laminations insulated from each other?</p>
-    <div class="options">
-      <label><input type="radio" name="q29"> a. To increase inductive reactance</label>
-      <label><input type="radio" name="q29"> b. To reduce eddy current losses</label>
-      <label><input type="radio" name="q29"> c. To improve convective oil cooling</label>
-      <label><input type="radio" name="q29"> d. To increase the turns ratio</label>
-    </div>
-  </div>
-
-  <!-- Q30 -->
-  <div class="question-block">
-    <div class="q-num">Question 30</div>
-    <p>The insulating fluid inside a conventional distribution transformer serves to:</p>
-    <div class="options">
-      <label><input type="radio" name="q30"> a. Conduct current between windings</label>
-      <label><input type="radio" name="q30"> b. Insulate the core from the case</label>
-      <label><input type="radio" name="q30"> c. Both cool the core/coil assembly and provide electrical insulation</label>
-      <label><input type="radio" name="q30"> d. Pressurize the tank to prevent moisture entry</label>
-    </div>
-  </div>
-
-  <!-- Q31 -->
-  <div class="question-block">
-    <div class="q-num">Question 31</div>
-    <p>In a concentric winding design, the primary winding is:</p>
-    <div class="options">
-      <label><input type="radio" name="q31"> a. Layered alternately between secondary turns</label>
-      <label><input type="radio" name="q31"> b. Wound concentrically around the same core as the secondary</label>
-      <label><input type="radio" name="q31"> c. Mounted on a separate core leg</label>
-      <label><input type="radio" name="q31"> d. External to the core/coil assembly</label>
-    </div>
-  </div>
-
-  <!-- Q32 -->
-  <div class="question-block">
-    <div class="q-num">Question 32</div>
-    <p>What component in the transformer nameplate data indicates the ratio of high-side voltage to low-side voltage?</p>
-    <div class="options">
-      <label><input type="radio" name="q32"> a. kVA rating</label>
-      <label><input type="radio" name="q32"> b. Impedance percentage</label>
-      <label><input type="radio" name="q32"> c. Voltage ratio (e.g., 7200/240)</label>
-      <label><input type="radio" name="q32"> d. Serial number</label>
-    </div>
-  </div>
-
-  <!-- Q33 -->
-  <div class="question-block">
-    <div class="q-num">Question 33</div>
-    <p>In a transformer tank, convection cooling works because:</p>
-    <div class="options">
-      <label><input type="radio" name="q33"> a. Oil is pumped through external radiators</label>
-      <label><input type="radio" name="q33"> b. Hot oil rises and cool oil sinks, creating a natural circulation loop</label>
-      <label><input type="radio" name="q33"> c. Fans force air over the tank fins</label>
-      <label><input type="radio" name="q33"> d. Expansion tanks draw heat away from the core</label>
-    </div>
-  </div>
-
-  <!-- Q34 -->
-  <div class="question-block">
-    <div class="q-num">Question 34</div>
-    <p>Which of the following is a characteristic of the secondary winding (compared to the primary)?</p>
-    <div class="options">
-      <label><input type="radio" name="q34"> a. It has smaller diameter conductors and more turns</label>
-      <label><input type="radio" name="q34"> b. It has larger conductors carrying lower voltage at higher current</label>
-      <label><input type="radio" name="q34"> c. It is always wound on the outer layer of the core</label>
-      <label><input type="radio" name="q34"> d. It has the same gauge wire as the primary</label>
-    </div>
-  </div>
-
-  <!-- Q35 -->
-  <div class="question-block">
-    <div class="q-num">Question 35</div>
-    <p>The term "core/coil assembly" refers to:</p>
-    <div class="options">
-      <label><input type="radio" name="q35"> a. The case and bushings only</label>
-      <label><input type="radio" name="q35"> b. The laminated iron core together with the wound primary and secondary coils</label>
-      <label><input type="radio" name="q35"> c. The cooling fins and oil tank</label>
-      <label><input type="radio" name="q35"> d. The nameplate and tap changer mechanism</label>
-    </div>
-  </div>
-
-  <!-- Q36 -->
-  <div class="question-block">
-    <div class="q-num">Question 36</div>
-    <p>Askarel is best described as:</p>
-    <div class="options">
-      <label><input type="radio" name="q36"> a. A type of core lamination material</label>
-      <label><input type="radio" name="q36"> b. An older PCB-containing insulating fluid once used in transformers</label>
-      <label><input type="radio" name="q36"> c. A copper alloy used for primary conductors</label>
-      <label><input type="radio" name="q36"> d. A dry-type winding insulation</label>
-    </div>
-  </div>
-
-  <!-- Q37 -->
-  <div class="question-block">
-    <div class="q-num">Question 37</div>
-    <p>A bushing on a transformer serves to:</p>
-    <div class="options">
-      <label><input type="radio" name="q37"> a. Monitor internal oil pressure</label>
-      <label><input type="radio" name="q37"> b. Insulate the conductor as it passes through the grounded tank wall</label>
-      <label><input type="radio" name="q37"> c. Cool the winding leads</label>
-      <label><input type="radio" name="q37"> d. Act as the fuse element</label>
-    </div>
-  </div>
-
-  <!-- Q38 -->
-  <div class="question-block">
-    <div class="q-num">Question 38</div>
-    <p>The tap changer on a distribution transformer allows the lineman to:</p>
-    <div class="options">
-      <label><input type="radio" name="q38"> a. Change the impedance of the unit</label>
-      <label><input type="radio" name="q38"> b. Adjust the output voltage by selecting different turns ratios</label>
-      <label><input type="radio" name="q38"> c. Bypass the core during energization</label>
-      <label><input type="radio" name="q38"> d. Switch between primary and secondary bushings</label>
-    </div>
-  </div>
-
-  <!-- Q39 -->
-  <div class="question-block">
-    <div class="q-num">Question 39</div>
-    <p>Why is silicon used in transformer core steel?</p>
-    <div class="options">
-      <label><input type="radio" name="q39"> a. It increases electrical conductivity</label>
-      <label><input type="radio" name="q39"> b. It reduces hysteresis losses and improves magnetic permeability</label>
-      <label><input type="radio" name="q39"> c. It prevents oil contamination</label>
-      <label><input type="radio" name="q39"> d. It makes laminations easier to weld</label>
-    </div>
-  </div>
-
-  <!-- Q40 -->
-  <div class="question-block">
-    <div class="q-num">Question 40</div>
-    <p>The pressure relief valve is typically found:</p>
-    <div class="options">
-      <label><input type="radio" name="q40"> a. On the bottom of the tank</label>
-      <label><input type="radio" name="q40"> b. On the nameplate bracket</label>
-      <label><input type="radio" name="q40"> c. On the top or upper side of the transformer tank</label>
-      <label><input type="radio" name="q40"> d. Adjacent to the tap changer dial</label>
-    </div>
-  </div>
-
-  <!-- Q41 -->
-  <div class="question-block">
-    <div class="q-num">Question 41</div>
-    <p>The insulating paper between winding layers in a transformer is saturated with oil primarily to:</p>
-    <div class="options">
-      <label><input type="radio" name="q41"> a. Increase the turns ratio</label>
-      <label><input type="radio" name="q41"> b. Improve dielectric strength and heat transfer</label>
-      <label><input type="radio" name="q41"> c. Reduce the weight of the assembly</label>
-      <label><input type="radio" name="q41"> d. Bond the laminations together</label>
-    </div>
-  </div>
-
-  <!-- Q42 -->
-  <div class="question-block">
-    <div class="q-num">Question 42</div>
-    <p>Where does the core/coil assembly mount inside the transformer?</p>
-    <div class="options">
-      <label><input type="radio" name="q42"> a. Suspended from the lid on the inside of the case</label>
-      <label><input type="radio" name="q42"> b. Resting on the bottom pan of the case</label>
-      <label><input type="radio" name="q42"> c. Bolted externally to the cooling fins</label>
-      <label><input type="radio" name="q42"> d. Attached to the pressure relief valve bracket</label>
-    </div>
-  </div>
-
-  <!-- Q43 -->
-  <div class="question-block">
-    <div class="q-num">Question 43</div>
-    <p>Which transformer component connects the winding leads to the external electrical system?</p>
-    <div class="options">
-      <label><input type="radio" name="q43"> a. Core laminations</label>
-      <label><input type="radio" name="q43"> b. Bushings</label>
-      <label><input type="radio" name="q43"> c. Cooling fins</label>
-      <label><input type="radio" name="q43"> d. Tap changer</label>
-    </div>
-  </div>
-
-  <!-- Q44 -->
-  <div class="question-block">
-    <div class="q-num">Question 44</div>
-    <p>In a single-phase distribution transformer, the two coils are related by:</p>
-    <div class="options">
-      <label><input type="radio" name="q44"> a. Physical distance between cases</label>
-      <label><input type="radio" name="q44"> b. A shared magnetic core linking their flux</label>
-      <label><input type="radio" name="q44"> c. A wire directly connecting primary to secondary</label>
-      <label><input type="radio" name="q44"> d. A semiconductor switching element</label>
-    </div>
-  </div>
-
-  <!-- Q45 -->
-  <div class="question-block">
-    <div class="q-num">Question 45</div>
-    <p>The NON-PCB label on a transformer nameplate became important after:</p>
-    <div class="options">
-      <label><input type="radio" name="q45"> a. The introduction of amorphous core steel</label>
-      <label><input type="radio" name="q45"> b. PCBs were identified as environmental and health hazards and banned</label>
-      <label><input type="radio" name="q45"> c. Underground padmount installations became standard</label>
-      <label><input type="radio" name="q45"> d. The adoption of copper instead of aluminum windings</label>
-    </div>
-  </div>
-
-  <!-- Q46 -->
-  <div class="question-block">
-    <div class="q-num">Question 46</div>
-    <p>In what major way does a dry-type transformer differ from an oil-filled transformer?</p>
-    <div class="options">
-      <label><input type="radio" name="q46"> a. It has no core</label>
-      <label><input type="radio" name="q46"> b. It uses air or solid insulation instead of insulating oil</label>
-      <label><input type="radio" name="q46"> c. It operates only on DC</label>
-      <label><input type="radio" name="q46"> d. Its primary and secondary are on separate cores</label>
-    </div>
-  </div>
-
-  <!-- Q47 -->
-  <div class="question-block">
-    <div class="q-num">Question 47</div>
-    <p>The NON-PCB label appears on the transformer because:</p>
-    <div class="options">
-      <label><input type="radio" name="q47"> a. The core is non-crystalline</label>
-      <label><input type="radio" name="q47"> b. The insulating fluid does not contain polychlorinated biphenyls</label>
-      <label><input type="radio" name="q47"> c. The windings are non-copper</label>
-      <label><input type="radio" name="q47"> d. The nameplate is not made of polycarbonate</label>
-    </div>
-  </div>
-
-  <!-- Q48 -->
-  <div class="question-block">
-    <div class="q-num">Question 48</div>
-    <p>In relation to winding labels A, B, C, D: C and D refer to:</p>
-    <div class="options">
-      <label><input type="radio" name="q48"> a. The primary winding ends</label>
-      <label><input type="radio" name="q48"> b. The ends of the secondary windings attaching to the low-voltage terminals</label>
-      <label><input type="radio" name="q48"> c. The tap changer positions</label>
-      <label><input type="radio" name="q48"> d. The ends of the high-voltage windings connecting to the breaker</label>
-    </div>
-  </div>
-
-  <!-- Q49 -->
-  <div class="question-block">
-    <div class="q-num">Question 49</div>
-    <p>What is the function of the cooling fins on a transformer tank?</p>
-    <div class="options">
-      <label><input type="radio" name="q49"> a. Increase structural rigidity of the case</label>
-      <label><input type="radio" name="q49"> b. Increase surface area to radiate heat from the oil to the surrounding air</label>
-      <label><input type="radio" name="q49"> c. House the tap changer mechanism</label>
-      <label><input type="radio" name="q49"> d. Provide mounting points for the hangar bolts</label>
-    </div>
-  </div>
-
-  <!-- Q50 -->
-  <div class="question-block">
-    <div class="q-num">Question 50</div>
-    <p>The secondary windings in a step-down transformer have:</p>
-    <div class="options">
-      <label><input type="radio" name="q50"> a. More turns and smaller wire than the primary</label>
-      <label><input type="radio" name="q50"> b. The same number of turns as the primary</label>
-      <label><input type="radio" name="q50"> c. Fewer turns and larger wire than the primary</label>
-      <label><input type="radio" name="q50"> d. More turns and larger wire than the primary</label>
-    </div>
-  </div>
-
-  <div class="section-label" style="margin-top:2rem;">Section 3 — Transformer Theory (Q 51–80)</div>
-
-  <!-- Q51 -->
-  <div class="question-block">
-    <div class="q-num">Question 51</div>
-    <p>When a coil of wire is placed close to another coil connected to an AC source, what phenomenon allows current to be induced in the second coil?</p>
-    <div class="options">
-      <label><input type="radio" name="q51"> a. Capacitance</label>
-      <label><input type="radio" name="q51"> b. Mutual induction</label>
-      <label><input type="radio" name="q51"> c. Convection</label>
-      <label><input type="radio" name="q51"> d. Direct conduction</label>
-    </div>
-  </div>
-
-  <!-- Q52 -->
-  <div class="question-block">
-    <div class="q-num">Question 52</div>
-    <p>The turns ratio of a transformer determines:</p>
-    <div class="options">
-      <label><input type="radio" name="q52"> a. The direction of current flow through the coils</label>
-      <label><input type="radio" name="q52"> b. Whether the transformer steps voltage up or down depending on the source</label>
-      <label><input type="radio" name="q52"> c. The oil convection rate</label>
-      <label><input type="radio" name="q52"> d. The impedance of the bushings</label>
-    </div>
-  </div>
-
-  <!-- Q53 -->
-  <div class="question-block">
-    <div class="q-num">Question 53</div>
-    <p>In a 7,200/240V transformer with a 30:1 turns ratio, the secondary has:</p>
-    <div class="options">
-      <label><input type="radio" name="q53"> a. 30 times more turns than the primary</label>
-      <label><input type="radio" name="q53"> b. 30 times fewer turns than the primary</label>
-      <label><input type="radio" name="q53"> c. The same number of turns as the primary</label>
-      <label><input type="radio" name="q53"> d. Exactly 30 turns total</label>
-    </div>
-  </div>
-
-  <!-- Q54 -->
-  <div class="question-block">
-    <div class="q-num">Question 54</div>
-    <p>Changing the number of turns in the coils of a transformer will:</p>
-    <div class="options">
-      <label><input type="radio" name="q54"> a. Affect the amount of induced voltage</label>
-      <label><input type="radio" name="q54"> b. Change the type of core material needed</label>
-      <label><input type="radio" name="q54"> c. Only affect impedance, not voltage</label>
-      <label><input type="radio" name="q54"> d. Cause oil breakdown</label>
-    </div>
-  </div>
-
-  <!-- Q55 -->
-  <div class="question-block">
-    <div class="q-num">Question 55</div>
-    <p>Polarity in a transformer refers to:</p>
-    <div class="options">
-      <label><input type="radio" name="q55"> a. The direction the secondary coil is wrapped relative to the primary coil</label>
-      <label><input type="radio" name="q55"> b. The ratio of turns between windings</label>
-      <label><input type="radio" name="q55"> c. The impedance percentage expressed in the nameplate</label>
-      <label><input type="radio" name="q55"> d. Whether the voltage is stepped up or stepped down</label>
-    </div>
-  </div>
-
-  <!-- Q56 -->
-  <div class="question-block">
-    <div class="q-num">Question 56</div>
-    <p>When the X1 bushing is on the left while facing the transformer, the polarity is:</p>
-    <div class="options">
-      <label><input type="radio" name="q56"> a. Subtractive</label>
-      <label><input type="radio" name="q56"> b. Additive</label>
-      <label><input type="radio" name="q56"> c. Neutral</label>
-      <label><input type="radio" name="q56"> d. Reversed</label>
-    </div>
-  </div>
-
-  <!-- Q57 -->
-  <div class="question-block">
-    <div class="q-num">Question 57</div>
-    <p>An "additive polarity" transformer configuration means:</p>
-    <div class="options">
-      <label><input type="radio" name="q57"> a. The H2 bushing is on the left when facing the transformer</label>
-      <label><input type="radio" name="q57"> b. The secondary voltage adds to the primary voltage during a polarity test</label>
-      <label><input type="radio" name="q57"> c. The transformer steps voltage up by adding turns</label>
-      <label><input type="radio" name="q57"> d. The impedance increases by the sum of both windings</label>
-    </div>
-  </div>
-
-  <!-- Q58 -->
-  <div class="question-block">
-    <div class="q-num">Question 58</div>
-    <p>The turns ratio of a 7,200/120/240V transformer with an output of 120/240V is:</p>
-    <div class="options">
-      <label><input type="radio" name="q58"> a. 60:1</label>
-      <label><input type="radio" name="q58"> b. 30:1</label>
-      <label><input type="radio" name="q58"> c. 15:1</label>
-      <label><input type="radio" name="q58"> d. 1:60</label>
-    </div>
-  </div>
-
-  <!-- Q59 -->
-  <div class="question-block">
-    <div class="q-num">Question 59</div>
-    <p>Impedance in a transformer is best defined as:</p>
-    <div class="options">
-      <label><input type="radio" name="q59"> a. The process by which oil circulates to cool the core/coil assembly</label>
-      <label><input type="radio" name="q59"> b. The direction of current flow through the two coils</label>
-      <label><input type="radio" name="q59"> c. Total opposition to current flow caused by the transformer itself</label>
-      <label><input type="radio" name="q59"> d. Expressed in percentage, it is the comparison of the number of turns between windings</label>
-    </div>
-  </div>
-
-  <!-- Q60 -->
-  <div class="question-block">
-    <div class="q-num">Question 60</div>
-    <p>The induced voltage in the secondary of a transformer is determined by:</p>
-    <div class="options">
-      <label><input type="radio" name="q60"> a. Whether the transformer is additive or subtractive polarity</label>
-      <label><input type="radio" name="q60"> b. The direction the secondary coil is wrapped relative to the primary coil</label>
-      <label><input type="radio" name="q60"> c. Both the turns ratio and the input voltage</label>
-      <label><input type="radio" name="q60"> d. Only the kVA rating of the unit</label>
-    </div>
-  </div>
-
-  <!-- Q61 -->
-  <div class="question-block">
-    <div class="q-num">Question 61</div>
-    <p>The phenomenon where a changing magnetic field in one coil induces a voltage in a nearby coil is called:</p>
-    <div class="options">
-      <label><input type="radio" name="q61"> a. Self-induction</label>
-      <label><input type="radio" name="q61"> b. Capacitive reactance</label>
-      <label><input type="radio" name="q61"> c. Mutual induction</label>
-      <label><input type="radio" name="q61"> d. Convective transfer</label>
-    </div>
-  </div>
-
-  <!-- Q62 -->
-  <div class="question-block">
-    <div class="q-num">Question 62</div>
-    <p>If the primary has 600 turns and the secondary has 30 turns, what is the turns ratio?</p>
-    <div class="options">
-      <label><input type="radio" name="q62"> a. 1:20</label>
-      <label><input type="radio" name="q62"> b. 20:1</label>
-      <label><input type="radio" name="q62"> c. 30:1</label>
-      <label><input type="radio" name="q62"> d. 2:1</label>
-    </div>
-  </div>
-
-  <!-- Q63 -->
-  <div class="question-block">
-    <div class="q-num">Question 63</div>
-    <p>A transformer with a 20:1 turns ratio and a primary voltage of 7,200V will have a secondary voltage of:</p>
-    <div class="options">
-      <label><input type="radio" name="q63"> a. 144,000V</label>
-      <label><input type="radio" name="q63"> b. 720V</label>
-      <label><input type="radio" name="q63"> c. 360V</label>
-      <label><input type="radio" name="q63"> d. 240V</label>
-    </div>
-  </div>
-
-  <!-- Q64 -->
-  <div class="question-block">
-    <div class="q-num">Question 64</div>
-    <p>The following determines whether a transformer steps voltage up or steps it down:</p>
-    <div class="options">
-      <label><input type="radio" name="q64"> a. The oil viscosity</label>
-      <label><input type="radio" name="q64"> b. Polarity marking (additive or subtractive)</label>
-      <label><input type="radio" name="q64"> c. Which winding is connected to the source</label>
-      <label><input type="radio" name="q64"> d. The kVA nameplate rating</label>
-    </div>
-  </div>
-
-  <!-- Q65 -->
-  <div class="question-block">
-    <div class="q-num">Question 65</div>
-    <p>Hysteresis loss in a transformer core is caused by:</p>
-    <div class="options">
-      <label><input type="radio" name="q65"> a. Excessive oil convection</label>
-      <label><input type="radio" name="q65"> b. The repeated magnetization and demagnetization of core material with each AC cycle</label>
-      <label><input type="radio" name="q65"> c. Circulating currents in the copper windings</label>
-      <label><input type="radio" name="q65"> d. Leakage flux escaping through the bushing</label>
-    </div>
-  </div>
-
-  <!-- Q66 -->
-  <div class="question-block">
-    <div class="q-num">Question 66</div>
-    <p>Eddy current losses in a transformer are minimized by:</p>
-    <div class="options">
-      <label><input type="radio" name="q66"> a. Using solid steel cores</label>
-      <label><input type="radio" name="q66"> b. Increasing primary turns</label>
-      <label><input type="radio" name="q66"> c. Using thin insulated laminations in the core</label>
-      <label><input type="radio" name="q66"> d. Reducing oil viscosity</label>
-    </div>
-  </div>
-
-  <!-- Q67 -->
-  <div class="question-block">
-    <div class="q-num">Question 67</div>
-    <p>In an ideal transformer, power input (primary) equals power output (secondary) because:</p>
-    <div class="options">
-      <label><input type="radio" name="q67"> a. Voltage and current both remain constant</label>
-      <label><input type="radio" name="q67"> b. When voltage is stepped down, current is proportionally stepped up</label>
-      <label><input type="radio" name="q67"> c. The core stores all excess energy</label>
-      <label><input type="radio" name="q67"> d. Impedance eliminates all losses</label>
-    </div>
-  </div>
-
-  <!-- Q68 -->
-  <div class="question-block">
-    <div class="q-num">Question 68</div>
-    <p>The following causes a transformer to "hum" during normal operation:</p>
-    <div class="options">
-      <label><input type="radio" name="q68"> a. Oil convection movement</label>
-      <label><input type="radio" name="q68"> b. Magnetostriction — the core expanding and contracting with AC frequency</label>
-      <label><input type="radio" name="q68"> c. Air bubbles in the insulating oil</label>
-      <label><input type="radio" name="q68"> d. Bushing vibration caused by the primary current</label>
-    </div>
-  </div>
-
-  <!-- Q69 -->
-  <div class="question-block">
-    <div class="q-num">Question 69</div>
-    <p>The impedance percentage on a transformer nameplate indicates:</p>
-    <div class="options">
-      <label><input type="radio" name="q69"> a. The turns ratio</label>
-      <label><input type="radio" name="q69"> b. The percentage of rated voltage required to circulate full-load current with the secondary short-circuited</label>
-      <label><input type="radio" name="q69"> c. The percentage of heat lost through the core</label>
-      <label><input type="radio" name="q69"> d. The comparison of number of turns between windings as a percentage</label>
-    </div>
-  </div>
-
-  <!-- Q70 -->
-  <div class="question-block">
-    <div class="q-num">Question 70</div>
-    <p>Subtractive polarity means:</p>
-    <div class="options">
-      <label><input type="radio" name="q70"> a. When H1 and X1 are on the same side, the secondary voltage subtracts from the primary in a polarity test</label>
-      <label><input type="radio" name="q70"> b. The transformer steps voltage down</label>
-      <label><input type="radio" name="q70"> c. The X1 bushing is always on the right when facing the transformer</label>
-      <label><input type="radio" name="q70"> d. The secondary winding has fewer turns than the primary</label>
-    </div>
-  </div>
-
-  <!-- Q71 -->
-  <div class="question-block">
-    <div class="q-num">Question 71</div>
-    <p>Mutual induction requires:</p>
-    <div class="options">
-      <label><input type="radio" name="q71"> a. A DC power source and two separate cores</label>
-      <label><input type="radio" name="q71"> b. A changing magnetic field linking two separate coils</label>
-      <label><input type="radio" name="q71"> c. Direct electrical contact between primary and secondary</label>
-      <label><input type="radio" name="q71"> d. A copper bus connecting the two windings</label>
-    </div>
-  </div>
-
-  <!-- Q72 -->
-  <div class="question-block">
-    <div class="q-num">Question 72</div>
-    <p>Leakage flux in a transformer refers to:</p>
-    <div class="options">
-      <label><input type="radio" name="q72"> a. Oil leaking past the bushing seal</label>
-      <label><input type="radio" name="q72"> b. Magnetic flux that does not link both primary and secondary windings</label>
-      <label><input type="radio" name="q72"> c. Current that leaks from primary to secondary through the insulation</label>
-      <label><input type="radio" name="q72"> d. Capacitive current through the tank wall</label>
-    </div>
-  </div>
-
-  <!-- Q73 -->
-  <div class="question-block">
-    <div class="q-num">Question 73</div>
-    <p>A 7,200/120/240V transformer supplies a 120/240V service. What does the center-tap on the secondary represent?</p>
-    <div class="options">
-      <label><input type="radio" name="q73"> a. A second primary winding terminal</label>
-      <label><input type="radio" name="q73"> b. The neutral conductor providing both 120V and 240V from a split secondary</label>
-      <label><input type="radio" name="q73"> c. A surge protection connection</label>
-      <label><input type="radio" name="q73"> d. The earth ground for the core</label>
-    </div>
-  </div>
-
-  <!-- Q74 -->
-  <div class="question-block">
-    <div class="q-num">Question 74</div>
-    <p>Which of these is an example of a step-up application of a transformer?</p>
-    <div class="options">
-      <label><input type="radio" name="q74"> a. Utility transformer reducing 7,200V to 240V for residential service</label>
-      <label><input type="radio" name="q74"> b. Generator step-up transformer raising 13.8kV to 345kV for transmission</label>
-      <label><input type="radio" name="q74"> c. Control transformer reducing 480V to 120V</label>
-      <label><input type="radio" name="q74"> d. Distribution transformer banked to supply a 120/240V split phase</label>
-    </div>
-  </div>
-
-  <!-- Q75 -->
-  <div class="question-block">
-    <div class="q-num">Question 75</div>
-    <p>Transformer efficiency is reduced by:</p>
-    <div class="options">
-      <label><input type="radio" name="q75"> a. Higher turns ratios</label>
-      <label><input type="radio" name="q75"> b. Core losses (hysteresis and eddy currents) and copper losses (I²R in windings)</label>
-      <label><input type="radio" name="q75"> c. Increased oil convection rates</label>
-      <label><input type="radio" name="q75"> d. The presence of a tap changer</label>
-    </div>
-  </div>
-
-  <!-- Q76 -->
-  <div class="question-block">
-    <div class="q-num">Question 76</div>
-    <p>The magnetic flux in the core of a transformer:</p>
-    <div class="options">
-      <label><input type="radio" name="q76"> a. Remains constant regardless of load</label>
-      <label><input type="radio" name="q76"> b. Reverses direction with each AC half-cycle</label>
-      <label><input type="radio" name="q76"> c. Flows in the same direction as secondary current</label>
-      <label><input type="radio" name="q76"> d. Is produced only when the secondary is loaded</label>
-    </div>
-  </div>
-
-  <!-- Q77 -->
-  <div class="question-block">
-    <div class="q-num">Question 77</div>
-    <p>The self-induction phenomenon in the primary winding:</p>
-    <div class="options">
-      <label><input type="radio" name="q77"> a. Causes the primary to generate a back-EMF opposing the source voltage</label>
-      <label><input type="radio" name="q77"> b. Transfers energy directly through the core to the secondary</label>
-      <label><input type="radio" name="q77"> c. Prevents any current from flowing in the secondary</label>
-      <label><input type="radio" name="q77"> d. Reverses the polarity marking of the secondary</label>
-    </div>
-  </div>
-
-  <!-- Q78 -->
-  <div class="question-block">
-    <div class="q-num">Question 78</div>
-    <p>When a transformer's secondary is on open circuit (no load), the primary current is:</p>
-    <div class="options">
-      <label><input type="radio" name="q78"> a. At full-load rated current</label>
-      <label><input type="radio" name="q78"> b. Zero, because no current flows without a load</label>
-      <label><input type="radio" name="q78"> c. A small magnetizing current only</label>
-      <label><input type="radio" name="q78"> d. Equal to short-circuit current</label>
-    </div>
-  </div>
-
-  <!-- Q79 -->
-  <div class="question-block">
-    <div class="q-num">Question 79</div>
-    <p>A higher impedance percentage on a transformer nameplate means:</p>
-    <div class="options">
-      <label><input type="radio" name="q79"> a. The transformer is more efficient</label>
-      <label><input type="radio" name="q79"> b. It will have lower fault current available on the secondary</label>
-      <label><input type="radio" name="q79"> c. It has a higher turns ratio</label>
-      <label><input type="radio" name="q79"> d. The kVA rating is higher</label>
-    </div>
-  </div>
-
-  <!-- Q80 -->
-  <div class="question-block">
-    <div class="q-num">Question 80</div>
-    <p>The relationship between primary and secondary voltages in an ideal transformer can be expressed as:</p>
-    <div class="options">
-      <label><input type="radio" name="q80"> a. Vp / Vs = Is / Ip</label>
-      <label><input type="radio" name="q80"> b. Vp / Vs = Np / Ns</label>
-      <label><input type="radio" name="q80"> c. Vp × Np = Vs × Ns</label>
-      <label><input type="radio" name="q80"> d. Vp + Vs = Np + Ns</label>
-    </div>
-  </div>
-
-  <div class="section-label" style="margin-top:2rem;">Section 4 — Operations, Ratings & Connections (Q 81–100)</div>
-
-  <!-- Q81 -->
-  <div class="question-block">
-    <div class="q-num">Question 81</div>
-    <p>A 7,200/12,470Y – 15 kVA transformer nameplate tells us:</p>
-    <div class="options">
-      <label><input type="radio" name="q81"> a. The primary voltage is 12,470V and capacity is 15 kVA</label>
-      <label><input type="radio" name="q81"> b. The secondary voltage is 7,200V</label>
-      <label><input type="radio" name="q81"> c. The primary can operate at 7,200V or 12,470V (wye), and the unit is rated 15 kVA</label>
-      <label><input type="radio" name="q81"> d. The transformer supplies 15 kVA at 7,200V only</label>
-    </div>
-  </div>
-
-  <!-- Q82 -->
-  <div class="question-block">
-    <div class="q-num">Question 82</div>
-    <p>The turns ratio of a 7,200/12,470Y transformer, with an output of 120/240V, is:</p>
-    <div class="options">
-      <label><input type="radio" name="q82"> a. 60:1</label>
-      <label><input type="radio" name="q82"> b. 15:1</label>
-      <label><input type="radio" name="q82"> c. 30:1</label>
-      <label><input type="radio" name="q82"> d. 52:1</label>
-    </div>
-  </div>
-
-  <!-- Q83 -->
-  <div class="question-block">
-    <div class="q-num">Question 83</div>
-    <p>When facing a 7,200/12,470Y transformer with an output of 120/240V, the X1 bushing is on the left. This indicates:</p>
-    <div class="options">
-      <label><input type="radio" name="q83"> a. Additive polarity</label>
-      <label><input type="radio" name="q83"> b. Subtractive polarity</label>
-      <label><input type="radio" name="q83"> c. Reverse polarity</label>
-      <label><input type="radio" name="q83"> d. Neutral polarity</label>
-    </div>
-  </div>
-
-  <!-- Q84 -->
-  <div class="question-block">
-    <div class="q-num">Question 84</div>
-    <p>Three single-phase transformers banked together, each rated 50 kVA, form a bank with a total rating of:</p>
-    <div class="options">
-      <label><input type="radio" name="q84"> a. 50 kVA</label>
-      <label><input type="radio" name="q84"> b. 100 kVA</label>
-      <label><input type="radio" name="q84"> c. 150 kVA</label>
-      <label><input type="radio" name="q84"> d. 16.7 kVA</label>
-    </div>
-  </div>
-
-  <!-- Q85 -->
-  <div class="question-block">
-    <div class="q-num">Question 85</div>
-    <p>Which transformer nameplate rating is "substation" class?</p>
-    <div class="options">
-      <label><input type="radio" name="q85"> a. 2,400/4,160 – 15 kVA</label>
-      <label><input type="radio" name="q85"> b. 7,200/12,470Y – 250 kVA</label>
-      <label><input type="radio" name="q85"> c. 167 kVA – 7,200/120/240V</label>
-      <label><input type="radio" name="q85"> d. 10 kVA – 120/240V</label>
-    </div>
-  </div>
-
-  <!-- Q86 -->
-  <div class="question-block">
-    <div class="q-num">Question 86</div>
-    <p>What does the "Y" in "12,470Y" indicate on a transformer nameplate?</p>
-    <div class="options">
-      <label><input type="radio" name="q86"> a. The transformer has a yellow warning label</label>
-      <label><input type="radio" name="q86"> b. It is connected in a wye (star) configuration with a grounded neutral</label>
-      <label><input type="radio" name="q86"> c. The output voltage is 12,470V on the secondary side</label>
-      <label><input type="radio" name="q86"> d. The unit is rated for use on 60 Hz systems only</label>
-    </div>
-  </div>
-
-  <!-- Q87 -->
-  <div class="question-block">
-    <div class="q-num">Question 87</div>
-    <p>In a 120/240V single-phase secondary, a customer receives 240V between:</p>
-    <div class="options">
-      <label><input type="radio" name="q87"> a. Either hot leg and the neutral</label>
-      <label><input type="radio" name="q87"> b. The two hot legs (X1 and X3)</label>
-      <label><input type="radio" name="q87"> c. The neutral and ground</label>
-      <label><input type="radio" name="q87"> d. X2 and ground</label>
-    </div>
-  </div>
-
-  <!-- Q88 -->
-  <div class="question-block">
-    <div class="q-num">Question 88</div>
-    <p>Why must transformers be de-energized before operating the tap changer?</p>
-    <div class="options">
-      <label><input type="radio" name="q88"> a. To prevent overheating of the oil</label>
-      <label><input type="radio" name="q88"> b. Because the tap changer is not designed to interrupt load current</label>
-      <label><input type="radio" name="q88"> c. To reset the polarity marking</label>
-      <label><input type="radio" name="q88"> d. To avoid overloading the secondary fuse</label>
-    </div>
-  </div>
-
-  <!-- Q89 -->
-  <div class="question-block">
-    <div class="q-num">Question 89</div>
-    <p>An overloaded transformer will exhibit:</p>
-    <div class="options">
-      <label><input type="radio" name="q89"> a. Reduced oil temperature</label>
-      <label><input type="radio" name="q89"> b. Excessive heat buildup that can damage insulation and shorten service life</label>
-      <label><input type="radio" name="q89"> c. Increased secondary voltage</label>
-      <label><input type="radio" name="q89"> d. Reduced primary current</label>
-    </div>
-  </div>
-
-  <!-- Q90 -->
-  <div class="question-block">
-    <div class="q-num">Question 90</div>
-    <p>The full-load secondary current of a 25 kVA, 120/240V transformer is approximately:</p>
-    <div class="options">
-      <label><input type="radio" name="q90"> a. 208A</label>
-      <label><input type="radio" name="q90"> b. 104A</label>
-      <label><input type="radio" name="q90"> c. 52A</label>
-      <label><input type="radio" name="q90"> d. 25A</label>
-    </div>
-  </div>
-
-  <!-- Q91 -->
-  <div class="question-block">
-    <div class="q-num">Question 91</div>
-    <p>When two transformers are paralleled on the secondary, they must have:</p>
-    <div class="options">
-      <label><input type="radio" name="q91"> a. The same kVA rating but different turns ratios</label>
-      <label><input type="radio" name="q91"> b. The same voltage ratio, polarity, and similar impedance</label>
-      <label><input type="radio" name="q91"> c. Different voltage ratings to balance the load</label>
-      <label><input type="radio" name="q91"> d. Different polarity markings to avoid circulating currents</label>
-    </div>
-  </div>
-
-  <!-- Q92 -->
-  <div class="question-block">
-    <div class="q-num">Question 92</div>
-    <p>The primary purpose of transformer impedance in a distribution system is to:</p>
-    <div class="options">
-      <label><input type="radio" name="q92"> a. Regulate output voltage under no-load conditions</label>
-      <label><input type="radio" name="q92"> b. Limit the magnitude of fault current on the secondary side</label>
-      <label><input type="radio" name="q92"> c. Increase core efficiency</label>
-      <label><input type="radio" name="q92"> d. Prevent hysteresis losses</label>
-    </div>
-  </div>
-
-  <!-- Q93 -->
-  <div class="question-block">
-    <div class="q-num">Question 93</div>
-    <p>Which of the following best describes a 2,400/4,160 – 250 kVA transformer?</p>
-    <div class="options">
-      <label><input type="radio" name="q93"> a. A residential service transformer</label>
-      <label><input type="radio" name="q93"> b. A substation-class transformer rated at 250 kVA</label>
-      <label><input type="radio" name="q93"> c. A padmount unit for underground residential distribution</label>
-      <label><input type="radio" name="q93"> d. A single-phase CSP transformer</label>
-    </div>
-  </div>
-
-  <!-- Q94 -->
-  <div class="question-block">
-    <div class="q-num">Question 94</div>
-    <p>A transformer is said to be operating at 100% when:</p>
-    <div class="options">
-      <label><input type="radio" name="q94"> a. Its core temperature reaches 100°C</label>
-      <label><input type="radio" name="q94"> b. The secondary is delivering its full nameplate kVA to the load</label>
-      <label><input type="radio" name="q94"> c. The turns ratio equals 1:1</label>
-      <label><input type="radio" name="q94"> d. The primary and secondary voltages are equal</label>
-    </div>
-  </div>
-
-  <!-- Q95 -->
-  <div class="question-block">
-    <div class="q-num">Question 95</div>
-    <p>Delta-wye transformer connections are commonly used in distribution systems because:</p>
-    <div class="options">
-      <label><input type="radio" name="q95"> a. They prevent any voltage transformation</label>
-      <label><input type="radio" name="q95"> b. The wye secondary provides a neutral for single-phase loads while the delta primary handles unbalanced currents</label>
-      <label><input type="radio" name="q95"> c. They eliminate all transformer losses</label>
-      <label><input type="radio" name="q95"> d. They allow DC power to pass through without rectification</label>
-    </div>
-  </div>
-
-  <!-- Q96 -->
-  <div class="question-block">
-    <div class="q-num">Question 96</div>
-    <p>Voltage regulation in a transformer is defined as:</p>
-    <div class="options">
-      <label><input type="radio" name="q96"> a. The change in secondary voltage from no-load to full-load as a percentage of full-load voltage</label>
-      <label><input type="radio" name="q96"> b. The ratio of primary to secondary turns</label>
-      <label><input type="radio" name="q96"> c. The kVA capacity divided by the primary voltage</label>
-      <label><input type="radio" name="q96"> d. The percentage of primary current that flows with no load</label>
-    </div>
-  </div>
-
-  <!-- Q97 -->
-  <div class="question-block">
-    <div class="q-num">Question 97</div>
-    <p>The correct tap changer position to boost secondary voltage when the primary is running low is:</p>
-    <div class="options">
-      <label><input type="radio" name="q97"> a. Move to a higher tap, adding primary turns and raising the turns ratio</label>
-      <label><input type="radio" name="q97"> b. Move to a lower tap, reducing primary turns and lowering the turns ratio</label>
-      <label><input type="radio" name="q97"> c. Move to a lower tap, adding primary turns and boosting secondary voltage</label>
-      <label><input type="radio" name="q97"> d. The tap changer has no effect on secondary voltage</label>
-    </div>
-  </div>
-
-  <!-- Q98 -->
-  <div class="question-block">
-    <div class="q-num">Question 98</div>
-    <p>An inrush current on transformer energization is:</p>
-    <div class="options">
-      <label><input type="radio" name="q98"> a. A sustained overload caused by excessive secondary loads</label>
-      <label><input type="radio" name="q98"> b. A brief, high-magnitude current spike when the transformer is first energized due to core magnetization</label>
-      <label><input type="radio" name="q98"> c. The continuous magnetizing current under no-load conditions</label>
-      <label><input type="radio" name="q98"> d. A voltage spike on the secondary due to capacitive coupling</label>
-    </div>
-  </div>
-
-  <!-- Q99 -->
-  <div class="question-block">
-    <div class="q-num">Question 99</div>
-    <p>A surge arrester is used on a transformer to:</p>
-    <div class="options">
-      <label><input type="radio" name="q99"> a. Increase the kVA rating during peak loading</label>
-      <label><input type="radio" name="q99"> b. Protect against lightning and switching transient overvoltages</label>
-      <label><input type="radio" name="q99"> c. Regulate secondary voltage under load</label>
-      <label><input type="radio" name="q99"> d. Isolate the primary from the secondary during a fault</label>
-    </div>
-  </div>
-
-  <!-- Q100 -->
-  <div class="question-block">
-    <div class="q-num">Question 100</div>
-    <p>Which of the following best explains why transformers are not 100% efficient?</p>
-    <div class="options">
-      <label><input type="radio" name="q100"> a. The turns ratio is never exactly a whole number</label>
-      <label><input type="radio" name="q100"> b. Some energy is always lost as heat due to core losses and winding resistance</label>
-      <label><input type="radio" name="q100"> c. The secondary voltage is always slightly higher than the primary voltage</label>
-      <label><input type="radio" name="q100"> d. Polarity mismatch reduces energy transfer</label>
-    </div>
-  </div>
-
-</div><!-- end questions page -->
-
-<!-- ========== ANSWER KEY PAGE ========== -->
+<div class="section-label">Section 1 — Transformer Identification (Q1–20)</div>
+
+<div class="question-block"><div class="q-num">Question 1</div><p>Which side of a transformer is considered the "source" side?</p><div class="options"><label><input type="radio" name="q1"> a. The secondary side</label><label><input type="radio" name="q1"> b. The load side</label><label><input type="radio" name="q1"> c. The primary side</label><label><input type="radio" name="q1"> d. The customer's side</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 2</div><p>The secondary side of a transformer connects to:</p><div class="options"><label><input type="radio" name="q2"> a. The source</label><label><input type="radio" name="q2"> b. The generating station</label><label><input type="radio" name="q2"> c. The load or customer</label><label><input type="radio" name="q2"> d. The high-voltage transmission line</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 3</div><p>A padmount transformer receives its feed from:</p><div class="options"><label><input type="radio" name="q3"> a. An overhead conductor</label><label><input type="radio" name="q3"> b. An underground conductor</label><label><input type="radio" name="q3"> c. A direct service drop</label><label><input type="radio" name="q3"> d. Hangar bolts on a pole</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 4</div><p>Which statement about conventional pole-mounted transformers is true?</p><div class="options"><label><input type="radio" name="q4"> a. They use internal cutouts for surge suppression</label><label><input type="radio" name="q4"> b. They have internal breakers between windings and primary bushings</label><label><input type="radio" name="q4"> c. They use an external fused device to protect against fault current</label><label><input type="radio" name="q4"> d. They are protected by Bay-O-Net fuses internally</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 5</div><p>CSP stands for:</p><div class="options"><label><input type="radio" name="q5"> a. Completely Self-Powered</label><label><input type="radio" name="q5"> b. Completely Self-Protected</label><label><input type="radio" name="q5"> c. Current-Sensing Portable</label><label><input type="radio" name="q5"> d. Conventional Single-Phase Padmount</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 6</div><p>A CSP transformer is internally protected by:</p><div class="options"><label><input type="radio" name="q6"> a. A voltage-limiting fuse</label><label><input type="radio" name="q6"> b. A Bay-O-Net fuse</label><label><input type="radio" name="q6"> c. A current-limiting fuse</label><label><input type="radio" name="q6"> d. An external dropout cutout</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 7</div><p>Which type of transformer has fuses located internally but operated externally?</p><div class="options"><label><input type="radio" name="q7"> a. Conventional transformers</label><label><input type="radio" name="q7"> b. CSP transformers</label><label><input type="radio" name="q7"> c. Padmount transformers</label><label><input type="radio" name="q7"> d. Pole-mounted transformers</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 8</div><p>On a padmount transformer, H1A and H1B are:</p><div class="options"><label><input type="radio" name="q8"> a. The secondary low-voltage bushings</label><label><input type="radio" name="q8"> b. The primary bushings on a padmount transformer</label><label><input type="radio" name="q8"> c. The primary bushings on a pole-bolted transformer</label><label><input type="radio" name="q8"> d. Neutral bushings</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 9</div><p>The H1 bushing is always located:</p><div class="options"><label><input type="radio" name="q9"> a. On the left when facing the transformer</label><label><input type="radio" name="q9"> b. On the bottom of the case</label><label><input type="radio" name="q9"> c. On the right when facing the transformer</label><label><input type="radio" name="q9"> d. Adjacent to the pressure relief valve</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 10</div><p>The labeling of the secondary bushings changes based on:</p><div class="options"><label><input type="radio" name="q10"> a. The kVA rating</label><label><input type="radio" name="q10"> b. The voltage class</label><label><input type="radio" name="q10"> c. Polarity</label><label><input type="radio" name="q10"> d. The manufacturer</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 11</div><p>When transformers are banked together, the combined kVA rating is:</p><div class="options"><label><input type="radio" name="q11"> a. The average of individual ratings</label><label><input type="radio" name="q11"> b. The rating of the largest transformer</label><label><input type="radio" name="q11"> c. The sum of the individual transformer ratings</label><label><input type="radio" name="q11"> d. Divided by number of transformers</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 12</div><p>An average-size home typically draws a peak load of approximately:</p><div class="options"><label><input type="radio" name="q12"> a. Less than 1 kVA</label><label><input type="radio" name="q12"> b. 10–15 kVA</label><label><input type="radio" name="q12"> c. 50 kVA or more</label><label><input type="radio" name="q12"> d. 100 kVA</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 13</div><p>A conventional overhead transformer is protected from fault current by:</p><div class="options"><label><input type="radio" name="q13"> a. An internal fuse operated from outside</label><label><input type="radio" name="q13"> b. A Bay-O-Net fuse between H1A and H1B</label><label><input type="radio" name="q13"> c. An external fused device like a dropout cutout</label><label><input type="radio" name="q13"> d. An internal current-limiting fuse</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 14</div><p>The kVA rating of a transformer tells you:</p><div class="options"><label><input type="radio" name="q14"> a. The input voltage</label><label><input type="radio" name="q14"> b. The output amperage</label><label><input type="radio" name="q14"> c. How much apparent power it can handle</label><label><input type="radio" name="q14"> d. The resistance of the core</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 15</div><p>Which transformer type sits on a concrete pad and is fed by underground cable?</p><div class="options"><label><input type="radio" name="q15"> a. CSP transformer</label><label><input type="radio" name="q15"> b. Conventional pole-mounted</label><label><input type="radio" name="q15"> c. Padmount transformer</label><label><input type="radio" name="q15"> d. Distribution substation transformer</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 16</div><p>Transformers only work on:</p><div class="options"><label><input type="radio" name="q16"> a. Direct current (DC)</label><label><input type="radio" name="q16"> b. Both AC and DC equally</label><label><input type="radio" name="q16"> c. Alternating current (AC)</label><label><input type="radio" name="q16"> d. Pulsating DC only</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 17</div><p>Bay-O-Net fuses in padmount transformers are used to:</p><div class="options"><label><input type="radio" name="q17"> a. Protect surge arresters</label><label><input type="radio" name="q17"> b. Isolate between H1A and H1B</label><label><input type="radio" name="q17"> c. Limit secondary fault current</label><label><input type="radio" name="q17"> d. Regulate output voltage</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 18</div><p>The primary bushings on a transformer connect to:</p><div class="options"><label><input type="radio" name="q18"> a. The low-voltage customer side</label><label><input type="radio" name="q18"> b. The high-voltage source side</label><label><input type="radio" name="q18"> c. The secondary winding only</label><label><input type="radio" name="q18"> d. The neutral conductor</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 19</div><p>A red indicator light on a CSP transformer means:</p><div class="options"><label><input type="radio" name="q19"> a. Normal operation</label><label><input type="radio" name="q19"> b. Overvoltage condition</label><label><input type="radio" name="q19"> c. Abnormal loading conditions</label><label><input type="radio" name="q19"> d. Pressure relief valve open</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 20</div><p>Transformers bolted to a pole using hangar bolts are called:</p><div class="options"><label><input type="radio" name="q20"> a. CSP transformers</label><label><input type="radio" name="q20"> b. Padmount transformers</label><label><input type="radio" name="q20"> c. Pole-bolted transformers</label><label><input type="radio" name="q20"> d. Distribution substation units</label></div></div>
+
+<div class="section-label" style="margin-top:2rem;">Section 2 — Transformer Anatomy (Q21–55)</div>
+
+<div class="question-block"><div class="q-num">Question 21</div><p>What does the core in a transformer do?</p><div class="options"><label><input type="radio" name="q21"> a. Holds the coils in place</label><label><input type="radio" name="q21"> b. Concentrates the magnetic flux to make the transformer more efficient</label><label><input type="radio" name="q21"> c. Keeps the coils separated inside the tank</label><label><input type="radio" name="q21"> d. Connects the primary and secondary electrically</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 22</div><p>The most common material used for transformer windings is:</p><div class="options"><label><input type="radio" name="q22"> a. Aluminum</label><label><input type="radio" name="q22"> b. Amorphous steel</label><label><input type="radio" name="q22"> c. Copper</label><label><input type="radio" name="q22"> d. Silicon-oriented steel</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 23</div><p>Compared to the secondary winding, the primary winding wire is:</p><div class="options"><label><input type="radio" name="q23"> a. Larger in diameter</label><label><input type="radio" name="q23"> b. Smaller in diameter</label><label><input type="radio" name="q23"> c. The same size</label><label><input type="radio" name="q23"> d. Made of aluminum</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 24</div><p>In winding labels A, B, C, D — what do C and D refer to?</p><div class="options"><label><input type="radio" name="q24"> a. The primary winding ends at the H bushings</label><label><input type="radio" name="q24"> b. The ends of the secondary winding at the low-voltage terminals</label><label><input type="radio" name="q24"> c. The high-voltage winding ends at the breaker</label><label><input type="radio" name="q24"> d. Where the core mounts inside the case</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 25</div><p>A standard distribution transformer cools itself by:</p><div class="options"><label><input type="radio" name="q25"> a. Ambient air temperature alone</label><label><input type="radio" name="q25"> b. An internal electric fan</label><label><input type="radio" name="q25"> c. Circulating oil by convection</label><label><input type="radio" name="q25"> d. A forced oil pump system</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 26</div><p>What does "non-PCB" mean on a transformer nameplate?</p><div class="options"><label><input type="radio" name="q26"> a. The windings use non-coated paper</label><label><input type="radio" name="q26"> b. The primary winding direction is non-standard</label><label><input type="radio" name="q26"> c. The insulating fluid does not contain the harmful chemical PCB</label><label><input type="radio" name="q26"> d. The core uses non-crystalline material</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 27</div><p>The pressure relief valve on a transformer is there to:</p><div class="options"><label><input type="radio" name="q27"> a. Control oil flow rate</label><label><input type="radio" name="q27"> b. Release dangerous pressure buildup inside the tank</label><label><input type="radio" name="q27"> c. Regulate cooling</label><label><input type="radio" name="q27"> d. Show the oil level</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 28</div><p>Transformer cores are made of:</p><div class="options"><label><input type="radio" name="q28"> a. Solid copper bars</label><label><input type="radio" name="q28"> b. Aluminum tubes</label><label><input type="radio" name="q28"> c. Thin stacked silicon-steel sheets (laminations)</label><label><input type="radio" name="q28"> d. Ceramic rings</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 29</div><p>Why are the steel sheets in a transformer core insulated from each other?</p><div class="options"><label><input type="radio" name="q29"> a. To increase inductive reactance</label><label><input type="radio" name="q29"> b. To reduce eddy current losses</label><label><input type="radio" name="q29"> c. To improve oil cooling</label><label><input type="radio" name="q29"> d. To increase the turns ratio</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 30</div><p>The oil inside a transformer does two things. What are they?</p><div class="options"><label><input type="radio" name="q30"> a. Conducts current and increases voltage</label><label><input type="radio" name="q30"> b. Insulates the core from the case only</label><label><input type="radio" name="q30"> c. Cools the core/coil assembly AND provides electrical insulation</label><label><input type="radio" name="q30"> d. Pressurizes the tank to keep moisture out</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 31</div><p>In a concentric winding design, both the primary and secondary are:</p><div class="options"><label><input type="radio" name="q31"> a. On separate cores</label><label><input type="radio" name="q31"> b. Wound around the same core</label><label><input type="radio" name="q31"> c. Mounted outside the tank</label><label><input type="radio" name="q31"> d. Alternately layered turn by turn</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 32</div><p>On a nameplate showing 7,200/240V, what does this tell you?</p><div class="options"><label><input type="radio" name="q32"> a. The kVA rating</label><label><input type="radio" name="q32"> b. The impedance</label><label><input type="radio" name="q32"> c. The voltage ratio — 7,200V in, 240V out</label><label><input type="radio" name="q32"> d. The serial number format</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 33</div><p>How does convection cooling work inside a transformer tank?</p><div class="options"><label><input type="radio" name="q33"> a. A pump pushes oil through external radiators</label><label><input type="radio" name="q33"> b. Hot oil rises to the top and cool oil sinks to the bottom, creating a loop</label><label><input type="radio" name="q33"> c. Fans blow air over the outside of the tank</label><label><input type="radio" name="q33"> d. An expansion tank pulls heat away from the core</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 34</div><p>Compared to the primary winding, the secondary winding has:</p><div class="options"><label><input type="radio" name="q34"> a. Smaller wire and more turns</label><label><input type="radio" name="q34"> b. Larger wire carrying lower voltage at higher current</label><label><input type="radio" name="q34"> c. The same wire size</label><label><input type="radio" name="q34"> d. Silicon-coated wire</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 35</div><p>The "core/coil assembly" means:</p><div class="options"><label><input type="radio" name="q35"> a. The case and bushings</label><label><input type="radio" name="q35"> b. The steel core with the primary and secondary coils wound on it</label><label><input type="radio" name="q35"> c. The cooling fins and oil tank</label><label><input type="radio" name="q35"> d. The nameplate and tap changer</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 36</div><p>Askarel is:</p><div class="options"><label><input type="radio" name="q36"> a. A type of core steel</label><label><input type="radio" name="q36"> b. An older insulating fluid that contained harmful PCBs</label><label><input type="radio" name="q36"> c. A copper alloy used in primary windings</label><label><input type="radio" name="q36"> d. A dry-type winding insulation</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 37</div><p>What does a bushing do on a transformer?</p><div class="options"><label><input type="radio" name="q37"> a. Monitors internal oil pressure</label><label><input type="radio" name="q37"> b. Insulates the conductor where it passes through the grounded tank wall</label><label><input type="radio" name="q37"> c. Cools the winding leads</label><label><input type="radio" name="q37"> d. Acts as the fuse element</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 38</div><p>The tap changer on a distribution transformer lets you:</p><div class="options"><label><input type="radio" name="q38"> a. Change the impedance</label><label><input type="radio" name="q38"> b. Fine-tune the output voltage by changing the turns ratio slightly</label><label><input type="radio" name="q38"> c. Bypass the core</label><label><input type="radio" name="q38"> d. Switch between primary and secondary bushings</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 39</div><p>Silicon is added to transformer core steel to:</p><div class="options"><label><input type="radio" name="q39"> a. Make it more electrically conductive</label><label><input type="radio" name="q39"> b. Reduce energy losses and improve how well it carries magnetic flux</label><label><input type="radio" name="q39"> c. Keep the oil clean</label><label><input type="radio" name="q39"> d. Make the laminations easier to weld</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 40</div><p>Where is the pressure relief valve typically located on a transformer?</p><div class="options"><label><input type="radio" name="q40"> a. On the bottom of the tank</label><label><input type="radio" name="q40"> b. On the nameplate bracket</label><label><input type="radio" name="q40"> c. On the top or upper side of the tank</label><label><input type="radio" name="q40"> d. Next to the tap changer</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 41</div><p>The paper between winding layers is soaked in oil to:</p><div class="options"><label><input type="radio" name="q41"> a. Increase the turns ratio</label><label><input type="radio" name="q41"> b. Improve insulation and transfer heat away from the windings</label><label><input type="radio" name="q41"> c. Reduce the weight of the assembly</label><label><input type="radio" name="q41"> d. Bond the laminations together</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 42</div><p>Inside the transformer tank, the core/coil assembly is:</p><div class="options"><label><input type="radio" name="q42"> a. Suspended from the lid</label><label><input type="radio" name="q42"> b. Sitting on the bottom</label><label><input type="radio" name="q42"> c. Bolted to the outside cooling fins</label><label><input type="radio" name="q42"> d. Attached to the pressure relief valve</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 43</div><p>Which component connects the winding leads to the outside electrical system?</p><div class="options"><label><input type="radio" name="q43"> a. Core laminations</label><label><input type="radio" name="q43"> b. Bushings</label><label><input type="radio" name="q43"> c. Cooling fins</label><label><input type="radio" name="q43"> d. Tap changer</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 44</div><p>The primary and secondary coils in a single-phase transformer are linked by:</p><div class="options"><label><input type="radio" name="q44"> a. A wire connecting them directly</label><label><input type="radio" name="q44"> b. A shared magnetic core</label><label><input type="radio" name="q44"> c. The distance between the two cases</label><label><input type="radio" name="q44"> d. A switching element</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 45</div><p>PCBs were removed from transformer oil because:</p><div class="options"><label><input type="radio" name="q45"> a. They reduced core efficiency</label><label><input type="radio" name="q45"> b. They were found to be a serious health and environmental hazard</label><label><input type="radio" name="q45"> c. They caused underground cable failures</label><label><input type="radio" name="q45"> d. They corroded copper windings</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 46</div><p>A dry-type transformer is different from an oil-filled transformer because:</p><div class="options"><label><input type="radio" name="q46"> a. It has no core</label><label><input type="radio" name="q46"> b. It uses air or solid insulation instead of oil</label><label><input type="radio" name="q46"> c. It only works on DC</label><label><input type="radio" name="q46"> d. Its primary and secondary are on separate cores</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 47</div><p>The NON-PCB label on a transformer means:</p><div class="options"><label><input type="radio" name="q47"> a. The core is non-crystalline</label><label><input type="radio" name="q47"> b. The insulating fluid has no polychlorinated biphenyls in it</label><label><input type="radio" name="q47"> c. The windings are not copper</label><label><input type="radio" name="q47"> d. The nameplate is not polycarbonate</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 48</div><p>What do the cooling fins on the outside of a transformer tank do?</p><div class="options"><label><input type="radio" name="q48"> a. Add structural strength to the case</label><label><input type="radio" name="q48"> b. Increase the surface area so heat can escape from the oil into the air</label><label><input type="radio" name="q48"> c. House the tap changer</label><label><input type="radio" name="q48"> d. Provide mounting points for hangar bolts</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 49</div><p>In a step-down transformer, the secondary winding has:</p><div class="options"><label><input type="radio" name="q49"> a. More turns and smaller wire than the primary</label><label><input type="radio" name="q49"> b. The same number of turns as the primary</label><label><input type="radio" name="q49"> c. Fewer turns and larger wire than the primary</label><label><input type="radio" name="q49"> d. More turns and larger wire than the primary</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 50</div><p>When a coil of wire is placed near another coil connected to an AC source, what allows current to be induced in the second coil?</p><div class="options"><label><input type="radio" name="q50"> a. Capacitance</label><label><input type="radio" name="q50"> b. Mutual induction</label><label><input type="radio" name="q50"> c. Convection</label><label><input type="radio" name="q50"> d. Direct conduction</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 51</div><p>The turns ratio tells you:</p><div class="options"><label><input type="radio" name="q51"> a. The direction current flows through the coils</label><label><input type="radio" name="q51"> b. How many times the voltage will step up or step down</label><label><input type="radio" name="q51"> c. How fast the oil circulates</label><label><input type="radio" name="q51"> d. The impedance of the bushings</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 52</div><p>A transformer has 600 turns on the primary and 30 turns on the secondary. What is the turns ratio?</p><div class="math-hint">💡 Turns Ratio = Primary Turns ÷ Secondary Turns</div><div class="options"><label><input type="radio" name="q52"> a. 1:20</label><label><input type="radio" name="q52"> b. 20:1</label><label><input type="radio" name="q52"> c. 30:1</label><label><input type="radio" name="q52"> d. 2:1</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 53</div><p>A transformer has a 30:1 turns ratio and a primary voltage of 7,200V. What is the secondary voltage?</p><div class="math-hint">💡 Secondary Voltage = Primary Voltage ÷ Turns Ratio</div><div class="options"><label><input type="radio" name="q53"> a. 360V</label><label><input type="radio" name="q53"> b. 240V</label><label><input type="radio" name="q53"> c. 720V</label><label><input type="radio" name="q53"> d. 144,000V</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 54</div><p>A transformer steps voltage from 14,400V down to 240V. What is the turns ratio?</p><div class="math-hint">💡 Turns Ratio = Primary Voltage ÷ Secondary Voltage</div><div class="options"><label><input type="radio" name="q54"> a. 30:1</label><label><input type="radio" name="q54"> b. 60:1</label><label><input type="radio" name="q54"> c. 120:1</label><label><input type="radio" name="q54"> d. 240:1</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 55</div><p>A transformer has 1,200 primary turns and a turns ratio of 10:1. How many secondary turns does it have?</p><div class="math-hint">💡 Secondary Turns = Primary Turns ÷ Turns Ratio</div><div class="options"><label><input type="radio" name="q55"> a. 60</label><label><input type="radio" name="q55"> b. 120</label><label><input type="radio" name="q55"> c. 240</label><label><input type="radio" name="q55"> d. 1,200</label></div></div>
+
+<div class="section-label" style="margin-top:2rem;">Section 3 — Component Identification (Q56–80)</div>
+
+<div class="question-block"><div class="q-num">Question 56</div><p>Polarity in a transformer tells you:</p><div class="options"><label><input type="radio" name="q56"> a. How many turns are on the primary</label><label><input type="radio" name="q56"> b. Which direction the secondary coil is wound compared to the primary</label><label><input type="radio" name="q56"> c. What the impedance percentage is</label><label><input type="radio" name="q56"> d. Whether the voltage is stepped up or down</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 57</div><p>When the X1 bushing is on the RIGHT while facing the transformer, the polarity is:</p><div class="options"><label><input type="radio" name="q57"> a. Subtractive</label><label><input type="radio" name="q57"> b. Additive</label><label><input type="radio" name="q57"> c. Neutral</label><label><input type="radio" name="q57"> d. Reversed</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 58</div><p>The turns ratio of a 7,200/120/240V transformer is:</p><div class="math-hint">💡 Turns Ratio = Primary Voltage ÷ Secondary Voltage (use 240V)</div><div class="options"><label><input type="radio" name="q58"> a. 60:1</label><label><input type="radio" name="q58"> b. 30:1</label><label><input type="radio" name="q58"> c. 15:1</label><label><input type="radio" name="q58"> d. 1:60</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 59</div><p>Impedance in a transformer means:</p><div class="options"><label><input type="radio" name="q59"> a. The way oil circulates to cool the core</label><label><input type="radio" name="q59"> b. The direction current flows through the coils</label><label><input type="radio" name="q59"> c. The total opposition to current flow created by the transformer itself</label><label><input type="radio" name="q59"> d. A comparison of turns between the windings</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 60</div><p>The voltage you get out of a transformer's secondary depends on:</p><div class="options"><label><input type="radio" name="q60"> a. Whether the transformer is additive or subtractive polarity</label><label><input type="radio" name="q60"> b. Which direction the secondary coil is wound</label><label><input type="radio" name="q60"> c. Both the turns ratio and the input voltage</label><label><input type="radio" name="q60"> d. Only the kVA rating</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 61</div><p>Mutual induction is what makes a transformer work. It means:</p><div class="options"><label><input type="radio" name="q61"> a. Current flows directly between primary and secondary through a wire</label><label><input type="radio" name="q61"> b. A changing magnetic field in one coil causes a voltage to be induced in a nearby coil</label><label><input type="radio" name="q61"> c. Both coils share the same current path</label><label><input type="radio" name="q61"> d. The core converts electrical energy into heat</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 62</div><p>You are looking at a transformer. The large porcelain insulators sticking out of the top of the tank where the high-voltage wires connect are called:</p><div class="id-hint">🔍 Think about what component connects the internal winding leads to the outside lines</div><div class="options"><label><input type="radio" name="q62"> a. Cooling fins</label><label><input type="radio" name="q62"> b. Primary bushings</label><label><input type="radio" name="q62"> c. Tap changers</label><label><input type="radio" name="q62"> d. Surge arresters</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 63</div><p>A transformer has a 20:1 turns ratio and a primary voltage of 7,200V. What is the secondary voltage?</p><div class="math-hint">💡 Secondary Voltage = Primary Voltage ÷ Turns Ratio</div><div class="options"><label><input type="radio" name="q63"> a. 144,000V</label><label><input type="radio" name="q63"> b. 720V</label><label><input type="radio" name="q63"> c. 360V</label><label><input type="radio" name="q63"> d. 240V</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 64</div><p>Whether a transformer steps voltage up or down depends on:</p><div class="options"><label><input type="radio" name="q64"> a. The oil viscosity</label><label><input type="radio" name="q64"> b. The polarity marking</label><label><input type="radio" name="q64"> c. Which winding is connected to the source</label><label><input type="radio" name="q64"> d. The kVA rating</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 65</div><p>You are looking at a pole-mounted transformer. You see two large insulators coming out of the top of the tank connected to the high-voltage primary line, and three smaller bushings at the bottom connected to the service drop. What are the two large insulators at the top called?</p><div class="id-hint">🔍 The high-voltage side always uses H-labeled bushings</div><div class="options"><label><input type="radio" name="q65"> a. X1 and X2 — the secondary bushings</label><label><input type="radio" name="q65"> b. H1 and H2 — the primary (high-voltage) bushings</label><label><input type="radio" name="q65"> c. Bay-O-Net fuse holders</label><label><input type="radio" name="q65"> d. Surge arrester terminals</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 66</div><p>On the outside of the transformer tank you see a series of vertical metal ridges or fins running up and down. What are these and what do they do?</p><div class="id-hint">🔍 These are always on the outside of the tank and increase surface area</div><div class="options"><label><input type="radio" name="q66"> a. Core laminations — they stack the steel sheets</label><label><input type="radio" name="q66"> b. Cooling fins — they radiate heat from the oil into the surrounding air</label><label><input type="radio" name="q66"> c. Winding supports — they hold the coils in place</label><label><input type="radio" name="q66"> d. Grounding lugs — they connect the case to earth ground</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 67</div><p>In a perfect transformer, the power going in equals the power coming out because:</p><div class="options"><label><input type="radio" name="q67"> a. Voltage and current stay the same on both sides</label><label><input type="radio" name="q67"> b. When voltage steps down, current steps up by the same ratio</label><label><input type="radio" name="q67"> c. The core stores the extra energy</label><label><input type="radio" name="q67"> d. Impedance cancels all losses</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 68</div><p>You open a transformer tank and see that the entire core and both coils are submerged in a liquid. What is this liquid and why is it there?</p><div class="id-hint">🔍 This liquid fills the entire inside of the tank</div><div class="options"><label><input type="radio" name="q68"> a. Water — to keep the core cool</label><label><input type="radio" name="q68"> b. Insulating oil — to cool the core/coil assembly and provide electrical insulation</label><label><input type="radio" name="q68"> c. Hydraulic fluid — to cushion the core during transportation</label><label><input type="radio" name="q68"> d. Askarel — all modern transformers still use it</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 69</div><p>You walk up to a transformer and face it straight on. You look at the secondary bushings and see that X1 is on the LEFT side. How do you identify the polarity of this transformer?</p><div class="id-hint">🔍 When H1 and X1 are on the same side, that tells you the polarity</div><div class="options"><label><input type="radio" name="q69"> a. Additive — X1 on the left means H1 and X1 are on opposite sides</label><label><input type="radio" name="q69"> b. Subtractive — X1 on the left means H1 and X1 are on the same side</label><label><input type="radio" name="q69"> c. The polarity cannot be determined by bushing position alone</label><label><input type="radio" name="q69"> d. Additive — X1 is always on the left on an additive transformer</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 70</div><p>Subtractive polarity means:</p><div class="options"><label><input type="radio" name="q70"> a. The transformer steps voltage down</label><label><input type="radio" name="q70"> b. H1 and X1 are on the same side, and during a polarity test the secondary voltage subtracts from the primary</label><label><input type="radio" name="q70"> c. X1 is always on the right</label><label><input type="radio" name="q70"> d. The secondary has fewer turns than the primary</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 71</div><p>A surge arrester is always connected between the bushing and ground. When a lightning strike sends a dangerous voltage spike into the line, what does the surge arrester do?</p><div class="id-hint">🔍 The arrester has to do something with that extra energy to protect the transformer</div><div class="options"><label><input type="radio" name="q71"> a. It opens the circuit and de-energizes the transformer</label><label><input type="radio" name="q71"> b. It diverts the surge current safely to ground before it can damage the transformer windings</label><label><input type="radio" name="q71"> c. It absorbs the surge and stores it in the core</label><label><input type="radio" name="q71"> d. It increases the impedance to block the surge</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 72</div><p>On a padmount transformer you see a cylindrical tube sticking out that can be pulled with a hot stick. What is this component?</p><div class="id-hint">🔍 This component is unique to padmount transformers and is operated externally</div><div class="options"><label><input type="radio" name="q72"> a. The surge arrester</label><label><input type="radio" name="q72"> b. The tap changer handle</label><label><input type="radio" name="q72"> c. The Bay-O-Net fuse</label><label><input type="radio" name="q72"> d. The pressure relief valve stem</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 73</div><p>You look at a transformer and see the nameplate reads "NON-PCB" and "Mineral Oil." What does this combination tell you about the insulating fluid inside the transformer?</p><div class="id-hint">🔍 PCB was the old hazardous fluid — mineral oil is the modern replacement</div><div class="options"><label><input type="radio" name="q73"> a. The transformer has no insulating fluid inside</label><label><input type="radio" name="q73"> b. The transformer contains a safe, modern mineral oil that does not have the harmful PCB chemical in it</label><label><input type="radio" name="q73"> c. The mineral oil contains PCB as an additive</label><label><input type="radio" name="q73"> d. The transformer uses air cooling instead of oil</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 74</div><p>You are looking at a transformer nameplate and see the label "H1, H2" on one side and "X1, X2, X3" on the other. What does this tell you about which side is which?</p><div class="id-hint">🔍 H bushings and X bushings are always on opposite sides of the transformer</div><div class="options"><label><input type="radio" name="q74"> a. H1 and H2 are the secondary (low-voltage) bushings; X1, X2, X3 are the primary</label><label><input type="radio" name="q74"> b. H1 and H2 are the primary (high-voltage) bushings; X1, X2, X3 are the secondary</label><label><input type="radio" name="q74"> c. Both H and X are primary bushings on a three-phase unit</label><label><input type="radio" name="q74"> d. H bushings are neutral connections; X bushings are hot connections</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 75</div><p>Why does a transformer tank need a pressure relief valve at all? What causes pressure to build up inside the tank?</p><div class="id-hint">🔍 Think about what happens to the oil when the transformer overheats or has an internal fault</div><div class="options"><label><input type="radio" name="q75"> a. Rain water gets inside and creates steam pressure</label><label><input type="radio" name="q75"> b. When the transformer overheats or has an internal fault, the oil can expand and produce gases — the pressure relief valve opens to prevent the tank from rupturing</label><label><input type="radio" name="q75"> c. The primary voltage pushes air into the tank through the bushings</label><label><input type="radio" name="q75"> d. The cooling fins create a vacuum that the valve must equalize</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 76</div><p>Which of the following best describes a conventional pole-mounted transformer?</p><div class="id-hint">🔍 "Conventional" means it relies on external devices for protection rather than having everything built in</div><div class="options"><label><input type="radio" name="q76"> a. A transformer that sits on a concrete pad, is fed by underground cable, and has its fuses located inside the cabinet operated from outside</label><label><input type="radio" name="q76"> b. A transformer that is completely self-protected with an internal current-limiting fuse, an internal circuit breaker, and a red light to show abnormal loading</label><label><input type="radio" name="q76"> c. A transformer that is mounted on a pole, connected to overhead primary lines, and depends on an external fused device such as a dropout cutout for fault protection</label><label><input type="radio" name="q76"> d. A transformer that is installed inside a substation and protected by large oil circuit breakers</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 77</div><p>You are looking at a single-phase overhead transformer on a pole. You see two wires going into the top of the transformer and three wires coming out of the bottom. Which wires are which?</p><div class="id-hint">🔍 Think about which side has higher voltage and which side feeds the customer</div><div class="options"><label><input type="radio" name="q77"> a. The two wires on top are the secondary; the three on the bottom are the primary</label><label><input type="radio" name="q77"> b. The two wires on top are the primary (high-voltage source); the three on the bottom are the secondary (120/240V service)</label><label><input type="radio" name="q77"> c. All five wires are primary connections</label><label><input type="radio" name="q77"> d. The two wires on top are neutral connections; the three are hot legs</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 78</div><p>You see a bare wire running from the transformer case down the pole to a ground rod in the earth. What is this wire and why is it there?</p><div class="id-hint">🔍 Every transformer case must be connected to earth for safety</div><div class="options"><label><input type="radio" name="q78"> a. The neutral conductor — it carries return current from the customer</label><label><input type="radio" name="q78"> b. The equipment ground — it connects the transformer case to earth so that if the case becomes energized, fault current flows to ground and trips protective devices instead of shocking a worker</label><label><input type="radio" name="q78"> c. The primary feed wire — it connects to the source</label><label><input type="radio" name="q78"> d. The secondary hot leg — it feeds 120V to the customer</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 79</div><p>On a transformer nameplate you see: "7,200/12,470Y – 25 kVA – 120/240V". What does the "Y" tell you about how this transformer is connected on the primary side?</p><div class="id-hint">🔍 This letter always refers to a specific wiring configuration</div><div class="options"><label><input type="radio" name="q79"> a. It runs on yellow-phase power only</label><label><input type="radio" name="q79"> b. The primary is connected in a wye (star) configuration with a grounded neutral available</label><label><input type="radio" name="q79"> c. The output voltage is 12,470V on the secondary</label><label><input type="radio" name="q79"> d. The unit is rated for 60 Hz systems only</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 80</div><p>A transformer nameplate reads: "7,200/12,470Y — 25 kVA — 120/240V." Which part of this nameplate tells you what voltage the customer will receive at their service panel?</p><div class="id-hint">🔍 The customer is always on the secondary (low-voltage) side</div><div class="options"><label><input type="radio" name="q80"> a. 7,200/12,470Y — this is the customer voltage</label><label><input type="radio" name="q80"> b. 25 kVA — this is the customer voltage</label><label><input type="radio" name="q80"> c. 120/240V — this is the secondary output voltage the customer receives</label><label><input type="radio" name="q80"> d. The "Y" — this indicates the customer voltage configuration</label></div></div>
+
+<div class="section-label" style="margin-top:2rem;">Section 4 — Operations, Ratings & Connections (Q81–100)</div>
+
+<div class="question-block"><div class="q-num">Question 81</div><p>A nameplate reading 7,200/12,470Y – 15 kVA means:</p><div class="options"><label><input type="radio" name="q81"> a. The primary is always 12,470V and capacity is 15 kVA</label><label><input type="radio" name="q81"> b. The secondary is 7,200V</label><label><input type="radio" name="q81"> c. The primary can work at either 7,200V or 12,470V wye, and the unit handles 15 kVA</label><label><input type="radio" name="q81"> d. It only supplies 15 kVA at 7,200V</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 82</div><p>A 7,200/12,470Y transformer outputs 120/240V. What is the turns ratio when operating at 7,200V primary?</p><div class="math-hint">💡 Turns Ratio = Primary Voltage ÷ Secondary Voltage (use 240V)</div><div class="options"><label><input type="radio" name="q82"> a. 60:1</label><label><input type="radio" name="q82"> b. 15:1</label><label><input type="radio" name="q82"> c. 30:1</label><label><input type="radio" name="q82"> d. 52:1</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 83</div><p>You are facing a transformer and the X1 bushing is on the LEFT. The polarity is:</p><div class="options"><label><input type="radio" name="q83"> a. Additive</label><label><input type="radio" name="q83"> b. Subtractive</label><label><input type="radio" name="q83"> c. Reversed</label><label><input type="radio" name="q83"> d. Neutral</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 84</div><p>Three 50 kVA single-phase transformers are banked together. What is the total bank rating?</p><div class="math-hint">💡 Bank kVA = Add all individual kVA ratings together</div><div class="options"><label><input type="radio" name="q84"> a. 50 kVA</label><label><input type="radio" name="q84"> b. 100 kVA</label><label><input type="radio" name="q84"> c. 150 kVA</label><label><input type="radio" name="q84"> d. 16.7 kVA</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 85</div><p>You are at a padmount transformer and need to identify the high-voltage primary bushings from the low-voltage secondary bushings. Which of the following correctly describes how to tell them apart?</p><div class="id-hint">🔍 H bushings = primary (high voltage). X bushings = secondary (low voltage)</div><div class="options"><label><input type="radio" name="q85"> a. The primary bushings are labeled X1A and X1B; the secondary are labeled H1, H2, H3</label><label><input type="radio" name="q85"> b. The primary bushings are labeled H1A and H1B (high voltage); the secondary bushings are labeled X1, X2, X3 (low voltage)</label><label><input type="radio" name="q85"> c. All bushings on a padmount are the same — you cannot tell them apart by label</label><label><input type="radio" name="q85"> d. The primary bushings are always on the bottom of the cabinet; the secondary are always on top</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 86</div><p>The "Y" in "12,470Y" on a nameplate means:</p><div class="options"><label><input type="radio" name="q86"> a. The transformer has a yellow warning label</label><label><input type="radio" name="q86"> b. It is connected in a wye (star) pattern with a grounded neutral</label><label><input type="radio" name="q86"> c. The secondary voltage is 12,470V</label><label><input type="radio" name="q86"> d. It is rated for 60 Hz only</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 87</div><p>On a 120/240V single-phase service, the customer gets 240V between:</p><div class="options"><label><input type="radio" name="q87"> a. Either hot leg and the neutral</label><label><input type="radio" name="q87"> b. The two hot legs (X1 and X3)</label><label><input type="radio" name="q87"> c. Neutral and ground</label><label><input type="radio" name="q87"> d. X2 and ground</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 88</div><p>You see a transformer with a small switch or dial on the side that has 5 positions. A co-worker says "we need to bump the tap." What does that mean and what must you do BEFORE touching it?</p><div class="id-hint">🔍 This component cannot safely be operated while the transformer is energized</div><div class="options"><label><input type="radio" name="q88"> a. Increase the oil level — do it while the transformer is running</label><label><input type="radio" name="q88"> b. Adjust the tap changer to change the secondary voltage — the transformer must be de-energized first because the tap changer cannot safely break current</label><label><input type="radio" name="q88"> c. Replace the surge arrester — it can be done live</label><label><input type="radio" name="q88"> d. Reset the pressure relief valve — no de-energizing needed</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 89</div><p>An overloaded transformer will:</p><div class="options"><label><input type="radio" name="q89"> a. Run cooler than normal</label><label><input type="radio" name="q89"> b. Build up excessive heat that damages the insulation and shortens its life</label><label><input type="radio" name="q89"> c. Increase its secondary voltage</label><label><input type="radio" name="q89"> d. Reduce primary current</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 90</div><p>You are looking at two transformers on two different poles. Transformer A has a dropout cutout mounted above it on the pole. Transformer B has no cutout above it but has a red indicator light visible on the case. Which one is the CSP and which is the conventional transformer?</p><div class="id-hint">🔍 A CSP is self-protected internally — it does not need an external cutout</div><div class="options"><label><input type="radio" name="q90"> a. Transformer A is the CSP — the cutout is part of its self-protection system</label><label><input type="radio" name="q90"> b. Transformer B is the CSP — it has internal protection and a status light; Transformer A is conventional and needs the external cutout for fault protection</label><label><input type="radio" name="q90"> c. Both are CSP transformers — all transformers have cutouts above them</label><label><input type="radio" name="q90"> d. Neither is a CSP — CSP transformers are only used underground</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 91</div><p>A homeowner tells you they have a 240V clothes dryer and 120V outlets in their house, both fed from the same transformer. What type of secondary service does this transformer provide, and what makes it possible to get both voltages from one transformer?</p><div class="id-hint">🔍 One secondary winding can supply two different voltages if it has a center tap</div><div class="options"><label><input type="radio" name="q91"> a. Three-phase service — three separate windings produce the two voltages</label><label><input type="radio" name="q91"> b. Single-phase 120/240V service — the secondary winding has a center-tap neutral that gives 120V from either hot leg to neutral and 240V across both hot legs</label><label><input type="radio" name="q91"> c. Two separate transformers are required — one for 120V and one for 240V</label><label><input type="radio" name="q91"> d. DC service converted to AC at the panel</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 92</div><p>On a single-phase transformer you see secondary bushings labeled X1, X2, and X3. A customer is asking where to connect for 240V and where to connect for 120V. Which terminals give you each voltage?</p><div class="id-hint">🔍 X2 is the center-tap neutral. X1 and X3 are the two hot legs.</div><div class="options"><label><input type="radio" name="q92"> a. X1 to X2 gives 240V; X1 to X3 gives 120V</label><label><input type="radio" name="q92"> b. X1 to X3 gives 240V; either X1 or X3 to X2 (neutral) gives 120V</label><label><input type="radio" name="q92"> c. X2 to X3 gives 240V; X1 to X2 gives 480V</label><label><input type="radio" name="q92"> d. All three terminals give 120V</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 93</div><p>You are looking at two transformers side by side on the same street. One nameplate reads 25 kVA and the other reads 167 kVA. A customer on this block runs a large commercial building. Which transformer is most likely serving that commercial customer and why?</p><div class="id-hint">🔍 Higher kVA means the transformer can handle more load</div><div class="options"><label><input type="radio" name="q93"> a. The 25 kVA unit — smaller transformers are always used for commercial buildings</label><label><input type="radio" name="q93"> b. The 167 kVA unit — it has a much larger capacity to handle the higher electrical demand of a commercial building</label><label><input type="radio" name="q93"> c. Both are the same — kVA does not affect how much load a transformer can serve</label><label><input type="radio" name="q93"> d. The 25 kVA unit — commercial buildings use lower voltage so they need less kVA</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 94</div><p>You look at a transformer nameplate and it reads "25 kVA." A customer says their house is fully loaded. What does 25 kVA tell you about what this transformer can handle?</p><div class="id-hint">🔍 The kVA rating is the maximum the transformer is designed to deliver continuously</div><div class="options"><label><input type="radio" name="q94"> a. It can handle up to 25 volts on the secondary</label><label><input type="radio" name="q94"> b. It can deliver up to 25,000 volt-amps (apparent power) to the load before it starts overheating</label><label><input type="radio" name="q94"> c. It uses 25 kilowatts of power internally</label><label><input type="radio" name="q94"> d. It has 25 turns on the primary winding</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 95</div><p>You arrive on a job and see a transformer with a green cabinet sitting at ground level in a yard. The cabinet is locked and has two sets of bushings inside — one set is larger with more insulation (high voltage) and one set is smaller (low voltage). Underground conduit comes in from both sides. What type of transformer is this and what does each bushing set connect to?</p><div class="id-hint">🔍 This is the standard underground residential distribution transformer</div><div class="options"><label><input type="radio" name="q95"> a. A CSP transformer — the large bushings connect to the service drop and the small ones connect to the primary line</label><label><input type="radio" name="q95"> b. A padmount transformer — the large high-voltage bushings (H) connect to the underground primary; the small low-voltage bushings (X) connect to the underground secondary going to the customer</label><label><input type="radio" name="q95"> c. A conventional transformer — the large bushings are the secondary and the small ones are the primary</label><label><input type="radio" name="q95"> d. A substation transformer — both bushing sets connect to transmission lines</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 96</div><p>You measure the secondary voltage on an unloaded transformer and get 242V. You then put a full load on it and measure 236V. What is this difference called and why does it matter?</p><div class="id-hint">🔍 This is expressed as a percentage and appears on the transformer nameplate</div><div class="options"><label><input type="radio" name="q96"> a. Impedance — it tells you the fault current limit</label><label><input type="radio" name="q96"> b. Voltage regulation — it shows how much the output voltage drops from no-load to full-load</label><label><input type="radio" name="q96"> c. Turns ratio error — the transformer needs to be rewound</label><label><input type="radio" name="q96"> d. Polarity shift — the X1 bushing needs to be moved</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 97</div><p>On a single-phase transformer secondary you see four conductors leaving the bottom of the transformer: two are black (hot), one is white (neutral), and one is bare (ground). Which conductor is the center-tap neutral and what voltage is it referenced to?</p><div class="id-hint">🔍 The neutral is always the center point of the secondary winding — it sits at zero volts</div><div class="options"><label><input type="radio" name="q97"> a. One of the black conductors — it references 240V to ground</label><label><input type="radio" name="q97"> b. The white conductor — it is the center-tap of the secondary winding, referenced to 0V (ground), giving 120V to either hot leg and 240V across both hot legs</label><label><input type="radio" name="q97"> c. The bare conductor — it carries the secondary current back to the transformer</label><label><input type="radio" name="q97"> d. Both black conductors together form the neutral</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 98</div><p>You are inspecting a transformer and notice the outside of the tank has a series of fins, a small valve on top, a ground wire running down to a rod, and a nameplate on the side. Match each external feature to its correct function:</p><div class="id-hint">🔍 Each of these components has a specific job on the outside of the transformer tank</div><div class="options"><label><input type="radio" name="q98"> a. Fins = protection from lightning; valve = regulates oil flow; ground wire = carries secondary current</label><label><input type="radio" name="q98"> b. Fins = radiate heat from the oil; valve = pressure relief to prevent tank rupture; ground wire = safety ground connecting the case to earth; nameplate = identifies voltage, kVA, and other ratings</label><label><input type="radio" name="q98"> c. Fins = structural support; valve = oil fill port; ground wire = primary neutral; nameplate = serial number only</label><label><input type="radio" name="q98"> d. Fins = surge protection; valve = tap changer access; ground wire = secondary hot leg; nameplate = manufacturing date only</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 99</div><p>A surge arrester on a transformer protects against:</p><div class="options"><label><input type="radio" name="q99"> a. Overloading during peak demand</label><label><input type="radio" name="q99"> b. Lightning strikes and switching surges that send dangerously high voltage spikes into the transformer</label><label><input type="radio" name="q99"> c. Secondary voltage drop under load</label><label><input type="radio" name="q99"> d. Fault current from the secondary side</label></div></div>
+
+<div class="question-block"><div class="q-num">Question 100</div><p>Transformers are not 100% efficient because:</p><div class="options"><label><input type="radio" name="q100"> a. The turns ratio is never a perfect whole number</label><label><input type="radio" name="q100"> b. Some energy is always lost as heat — in the core and in the resistance of the winding wire</label><label><input type="radio" name="q100"> c. Secondary voltage is always slightly higher than primary voltage</label><label><input type="radio" name="q100"> d. Polarity mismatch reduces energy transfer</label></div></div>
+
+</div><!-- end questions -->
+
+<!-- ANSWER KEY -->
 <div class="page" id="key">
-
   <button class="toggle-key-btn" onclick="toggleKey()">Show / Hide Answer Key</button>
-
   <div class="answer-key" id="answerKey">
 
-    <div class="key-section-label">Section 1 — Transformer Identification (Q 1–20)</div>
+    <div class="key-section-label">Section 1 — Identification (Q1–20)</div>
     <div class="answer-grid">
-      <div class="answer-item"><span>Q1</span> c. Primary side</div>
-      <div class="answer-item"><span>Q2</span> c. The load / customer</div>
-      <div class="answer-item"><span>Q3</span> b. Underground conductor</div>
-      <div class="answer-item"><span>Q4</span> c. External fused device</div>
-      <div class="answer-item"><span>Q5</span> b. Completely Self-Protected</div>
-      <div class="answer-item"><span>Q6</span> c. Current-limiting fuse</div>
-      <div class="answer-item"><span>Q7</span> c. Padmount transformers</div>
-      <div class="answer-item"><span>Q8</span> b. Primary bushings on a padmount</div>
-      <div class="answer-item"><span>Q9</span> c. On the right (facing transformer)</div>
-      <div class="answer-item"><span>Q10</span> c. Polarity</div>
-      <div class="answer-item"><span>Q11</span> c. Sum of individual ratings</div>
-      <div class="answer-item"><span>Q12</span> b. 10–15 kVA</div>
-      <div class="answer-item"><span>Q13</span> c. External fused device</div>
-      <div class="answer-item"><span>Q14</span> c. Apparent power capacity</div>
-      <div class="answer-item"><span>Q15</span> c. Padmount transformer</div>
-      <div class="answer-item"><span>Q16</span> c. Alternating current (AC)</div>
-      <div class="answer-item"><span>Q17</span> b. Isolate between H1A and H1B</div>
-      <div class="answer-item"><span>Q18</span> b. Connect to high-voltage source</div>
-      <div class="answer-item"><span>Q19</span> c. Abnormal loading conditions</div>
-      <div class="answer-item"><span>Q20</span> c. Pole-bolted transformers</div>
+      <div class="answer-item"><span>Q1</span>c. Primary side</div>
+      <div class="answer-item"><span>Q2</span>c. Load / customer</div>
+      <div class="answer-item"><span>Q3</span>b. Underground conductor</div>
+      <div class="answer-item"><span>Q4</span>c. External fused device</div>
+      <div class="answer-item"><span>Q5</span>b. Completely Self-Protected</div>
+      <div class="answer-item"><span>Q6</span>c. Current-limiting fuse</div>
+      <div class="answer-item"><span>Q7</span>c. Padmount transformers</div>
+      <div class="answer-item"><span>Q8</span>b. Primary bushings on padmount</div>
+      <div class="answer-item"><span>Q9</span>c. Right side (facing xfmr)</div>
+      <div class="answer-item"><span>Q10</span>c. Polarity</div>
+      <div class="answer-item"><span>Q11</span>c. Sum of individual ratings</div>
+      <div class="answer-item"><span>Q12</span>b. 10–15 kVA</div>
+      <div class="answer-item"><span>Q13</span>c. External fused device</div>
+      <div class="answer-item"><span>Q14</span>c. Apparent power capacity</div>
+      <div class="answer-item"><span>Q15</span>c. Padmount transformer</div>
+      <div class="answer-item"><span>Q16</span>c. AC systems</div>
+      <div class="answer-item"><span>Q17</span>b. Isolate H1A and H1B</div>
+      <div class="answer-item"><span>Q18</span>b. High-voltage source side</div>
+      <div class="answer-item"><span>Q19</span>c. Abnormal loading</div>
+      <div class="answer-item"><span>Q20</span>c. Pole-bolted transformers</div>
     </div>
 
-    <div class="key-section-label">Section 2 — Transformer Anatomy (Q 21–50)</div>
+    <div class="key-section-label">Section 2 — Anatomy (Q21–55)</div>
     <div class="answer-grid">
-      <div class="answer-item"><span>Q21</span> b. Concentrate flux / improve efficiency</div>
-      <div class="answer-item"><span>Q22</span> c. Copper</div>
-      <div class="answer-item"><span>Q23</span> b. Smaller diameter wire</div>
-      <div class="answer-item"><span>Q24</span> b. End of secondary winding / low-voltage terminal</div>
-      <div class="answer-item"><span>Q25</span> c. Circulating oil by convection</div>
-      <div class="answer-item"><span>Q26</span> c. No PCB in insulating fluid</div>
-      <div class="answer-item"><span>Q27</span> b. Release internal pressure buildup</div>
-      <div class="answer-item"><span>Q28</span> c. Thin laminated silicon-steel sheets</div>
-      <div class="answer-item"><span>Q29</span> b. Reduce eddy current losses</div>
-      <div class="answer-item"><span>Q30</span> c. Cool AND insulate core/coil assembly</div>
-      <div class="answer-item"><span>Q31</span> b. Wound concentrically around same core</div>
-      <div class="answer-item"><span>Q32</span> c. Voltage ratio</div>
-      <div class="answer-item"><span>Q33</span> b. Hot oil rises / cool oil sinks</div>
-      <div class="answer-item"><span>Q34</span> b. Larger conductors, lower voltage, higher current</div>
-      <div class="answer-item"><span>Q35</span> b. Iron core + primary and secondary coils</div>
-      <div class="answer-item"><span>Q36</span> b. PCB-containing insulating fluid</div>
-      <div class="answer-item"><span>Q37</span> b. Insulate conductor through grounded tank wall</div>
-      <div class="answer-item"><span>Q38</span> b. Adjust output voltage / select turns ratio</div>
-      <div class="answer-item"><span>Q39</span> b. Reduce hysteresis losses / improve permeability</div>
-      <div class="answer-item"><span>Q40</span> c. Top or upper side of tank</div>
-      <div class="answer-item"><span>Q41</span> b. Improve dielectric strength and heat transfer</div>
-      <div class="answer-item"><span>Q42</span> a. Suspended from the lid / inside case</div>
-      <div class="answer-item"><span>Q43</span> b. Bushings</div>
-      <div class="answer-item"><span>Q44</span> b. Shared magnetic core linking flux</div>
-      <div class="answer-item"><span>Q45</span> b. PCBs identified as hazardous and banned</div>
-      <div class="answer-item"><span>Q46</span> b. Air or solid insulation instead of oil</div>
-      <div class="answer-item"><span>Q47</span> b. No polychlorinated biphenyls in fluid</div>
-      <div class="answer-item"><span>Q48</span> b. Ends of secondary / low-voltage terminals</div>
-      <div class="answer-item"><span>Q49</span> b. Increase surface area / radiate heat</div>
-      <div class="answer-item"><span>Q50</span> c. Fewer turns and larger wire than primary</div>
+      <div class="answer-item"><span>Q21</span>b. Concentrate flux / efficiency</div>
+      <div class="answer-item"><span>Q22</span>c. Copper</div>
+      <div class="answer-item"><span>Q23</span>b. Smaller in diameter</div>
+      <div class="answer-item"><span>Q24</span>b. Secondary / low-voltage terminals</div>
+      <div class="answer-item"><span>Q25</span>c. Circulating oil by convection</div>
+      <div class="answer-item"><span>Q26</span>c. No harmful PCB in fluid</div>
+      <div class="answer-item"><span>Q27</span>b. Release dangerous pressure</div>
+      <div class="answer-item"><span>Q28</span>c. Thin silicon-steel laminations</div>
+      <div class="answer-item"><span>Q29</span>b. Reduce eddy current losses</div>
+      <div class="answer-item"><span>Q30</span>c. Cool AND insulate</div>
+      <div class="answer-item"><span>Q31</span>b. Wound on same core</div>
+      <div class="answer-item"><span>Q32</span>c. Voltage ratio (7,200V in / 240V out)</div>
+      <div class="answer-item"><span>Q33</span>b. Hot oil rises / cool oil sinks</div>
+      <div class="answer-item"><span>Q34</span>b. Larger wire / lower V / higher A</div>
+      <div class="answer-item"><span>Q35</span>b. Steel core + primary & secondary coils</div>
+      <div class="answer-item"><span>Q36</span>b. PCB-containing insulating fluid</div>
+      <div class="answer-item"><span>Q37</span>b. Insulates conductor thru tank wall</div>
+      <div class="answer-item"><span>Q38</span>b. Fine-tune output voltage</div>
+      <div class="answer-item"><span>Q39</span>b. Reduce losses / improve flux</div>
+      <div class="answer-item"><span>Q40</span>c. Top of tank</div>
+      <div class="answer-item"><span>Q41</span>b. Improve insulation + transfer heat</div>
+      <div class="answer-item"><span>Q42</span>a. Suspended from the lid</div>
+      <div class="answer-item"><span>Q43</span>b. Bushings</div>
+      <div class="answer-item"><span>Q44</span>b. Shared magnetic core</div>
+      <div class="answer-item"><span>Q45</span>b. Health and environmental hazard</div>
+      <div class="answer-item"><span>Q46</span>b. Air or solid insulation</div>
+      <div class="answer-item"><span>Q47</span>b. No polychlorinated biphenyls</div>
+      <div class="answer-item"><span>Q48</span>b. Increase surface area / radiate heat</div>
+      <div class="answer-item"><span>Q49</span>c. Fewer turns, larger wire</div>
+      <div class="answer-item"><span>Q50</span>b. Mutual induction</div>
+      <div class="answer-item"><span>Q51</span>b. How many times V steps up or down</div>
+      <div class="answer-item"><span>Q52</span>b. 20:1 (600÷30=20)</div>
+      <div class="answer-item"><span>Q53</span>b. 240V (7,200÷30=240)</div>
+      <div class="answer-item"><span>Q54</span>b. 60:1 (14,400÷240=60)</div>
+      <div class="answer-item"><span>Q55</span>b. 120 turns (1,200÷10=120)</div>
     </div>
 
-    <div class="key-section-label">Section 3 — Transformer Theory (Q 51–80)</div>
+    <div class="key-section-label">Section 3 — Component Identification (Q56–80)</div>
     <div class="answer-grid">
-      <div class="answer-item"><span>Q51</span> b. Mutual induction</div>
-      <div class="answer-item"><span>Q52</span> b. Steps voltage up or down</div>
-      <div class="answer-item"><span>Q53</span> b. 30× fewer turns than primary</div>
-      <div class="answer-item"><span>Q54</span> a. Affects amount of induced voltage</div>
-      <div class="answer-item"><span>Q55</span> a. Direction secondary coil is wrapped</div>
-      <div class="answer-item"><span>Q56</span> b. Additive polarity</div>
-      <div class="answer-item"><span>Q57</span> b. Secondary voltage adds to primary in test</div>
-      <div class="answer-item"><span>Q58</span> b. 30:1</div>
-      <div class="answer-item"><span>Q59</span> c. Total opposition to current flow</div>
-      <div class="answer-item"><span>Q60</span> c. Turns ratio AND input voltage</div>
-      <div class="answer-item"><span>Q61</span> c. Mutual induction</div>
-      <div class="answer-item"><span>Q62</span> b. 20:1</div>
-      <div class="answer-item"><span>Q63</span> c. 360V</div>
-      <div class="answer-item"><span>Q64</span> c. Which winding is connected to the source</div>
-      <div class="answer-item"><span>Q65</span> b. Repeated magnetization / demagnetization each AC cycle</div>
-      <div class="answer-item"><span>Q66</span> c. Thin insulated laminations in core</div>
-      <div class="answer-item"><span>Q67</span> b. When voltage steps down, current steps up</div>
-      <div class="answer-item"><span>Q68</span> b. Magnetostriction</div>
-      <div class="answer-item"><span>Q69</span> b. % rated voltage to circulate full-load current (secondary shorted)</div>
-      <div class="answer-item"><span>Q70</span> a. H1 and X1 same side / secondary voltage subtracts in polarity test</div>
-      <div class="answer-item"><span>Q71</span> b. Changing magnetic field linking two coils</div>
-      <div class="answer-item"><span>Q72</span> b. Flux that doesn't link both windings</div>
-      <div class="answer-item"><span>Q73</span> b. Neutral / split secondary for 120V and 240V</div>
-      <div class="answer-item"><span>Q74</span> b. Generator step-up (13.8kV → 345kV)</div>
-      <div class="answer-item"><span>Q75</span> b. Core losses + copper losses (I²R)</div>
-      <div class="answer-item"><span>Q76</span> b. Reverses direction each AC half-cycle</div>
-      <div class="answer-item"><span>Q77</span> a. Generates back-EMF opposing source voltage</div>
-      <div class="answer-item"><span>Q78</span> c. Small magnetizing current only</div>
-      <div class="answer-item"><span>Q79</span> b. Lower fault current on secondary</div>
-      <div class="answer-item"><span>Q80</span> b. Vp / Vs = Np / Ns</div>
+      <div class="answer-item"><span>Q56</span>b. Direction secondary coil is wound</div>
+      <div class="answer-item"><span>Q57</span>b. Additive polarity</div>
+      <div class="answer-item"><span>Q58</span>b. 30:1 (7,200÷240=30)</div>
+      <div class="answer-item"><span>Q59</span>c. Total opposition to current flow</div>
+      <div class="answer-item"><span>Q60</span>c. Turns ratio AND input voltage</div>
+      <div class="answer-item"><span>Q61</span>b. Changing magnetic field induces voltage in nearby coil</div>
+      <div class="answer-item"><span>Q62</span>b. Primary bushings</div>
+      <div class="answer-item"><span>Q63</span>c. 360V (7,200÷20=360)</div>
+      <div class="answer-item"><span>Q64</span>c. Which winding connects to source</div>
+      <div class="answer-item"><span>Q65</span>b. H1 and H2 — primary (high-voltage) bushings</div>
+      <div class="answer-item"><span>Q66</span>b. Cooling fins / radiate heat</div>
+      <div class="answer-item"><span>Q67</span>b. V steps down → A steps up</div>
+      <div class="answer-item"><span>Q68</span>b. Insulating oil — cools and insulates</div>
+      <div class="answer-item"><span>Q69</span>b. Subtractive — X1 on the left means H1 and X1 are on the same side</div>
+      <div class="answer-item"><span>Q70</span>b. H1 & X1 same side / V subtracts in test</div>
+      <div class="answer-item"><span>Q71</span>b. Diverts surge current safely to ground</div>
+      <div class="answer-item"><span>Q72</span>c. Bay-O-Net fuse</div>
+      <div class="answer-item"><span>Q73</span>b. Safe modern mineral oil — no harmful PCB</div>
+      <div class="answer-item"><span>Q74</span>b. H = primary (high-voltage); X = secondary</div>
+      <div class="answer-item"><span>Q75</span>b. Overheating/fault causes oil to expand and gas to form — valve prevents tank rupture</div>
+      <div class="answer-item"><span>Q76</span>c. Pole-mounted, overhead primary lines, depends on external fused device (dropout cutout) for fault protection</div>
+      <div class="answer-item"><span>Q77</span>b. Top 2 wires = primary; bottom 3 = secondary</div>
+      <div class="answer-item"><span>Q78</span>b. Equipment ground — connects case to earth for fault protection</div>
+      <div class="answer-item"><span>Q79</span>b. Wye (star) / grounded neutral available</div>
+      <div class="answer-item"><span>Q80</span>c. 120/240V — the secondary output voltage the customer receives</div>
     </div>
 
-    <div class="key-section-label">Section 4 — Operations, Ratings & Connections (Q 81–100)</div>
+    <div class="key-section-label">Section 4 — Operations, Ratings & Connections (Q81–100)</div>
     <div class="answer-grid">
-      <div class="answer-item"><span>Q81</span> c. Dual primary voltage / 15 kVA rated</div>
-      <div class="answer-item"><span>Q82</span> c. 30:1</div>
-      <div class="answer-item"><span>Q83</span> b. Subtractive polarity</div>
-      <div class="answer-item"><span>Q84</span> c. 150 kVA</div>
-      <div class="answer-item"><span>Q85</span> b. 7,200/12,470Y – 250 kVA</div>
-      <div class="answer-item"><span>Q86</span> b. Wye (star) configuration with grounded neutral</div>
-      <div class="answer-item"><span>Q87</span> b. The two hot legs (X1 and X3)</div>
-      <div class="answer-item"><span>Q88</span> b. Tap changer cannot interrupt load current</div>
-      <div class="answer-item"><span>Q89</span> b. Excessive heat / insulation damage</div>
-      <div class="answer-item"><span>Q90</span> b. 104A</div>
-      <div class="answer-item"><span>Q91</span> b. Same voltage ratio, polarity, similar impedance</div>
-      <div class="answer-item"><span>Q92</span> b. Limit secondary fault current</div>
-      <div class="answer-item"><span>Q93</span> b. Substation-class 250 kVA</div>
-      <div class="answer-item"><span>Q94</span> b. Delivering full nameplate kVA to load</div>
-      <div class="answer-item"><span>Q95</span> b. Wye neutral for single-phase loads / delta handles unbalanced current</div>
-      <div class="answer-item"><span>Q96</span> a. Change in secondary voltage no-load to full-load as % of full-load voltage</div>
-      <div class="answer-item"><span>Q97</span> b. Move to lower tap / reduce primary turns / lower turns ratio / boost secondary</div>
-      <div class="answer-item"><span>Q98</span> b. Brief high-magnitude spike on energization</div>
-      <div class="answer-item"><span>Q99</span> b. Protect against lightning and switching transients</div>
-      <div class="answer-item"><span>Q100</span> b. Heat loss — core losses + winding resistance</div>
+      <div class="answer-item"><span>Q81</span>c. Dual primary voltage / 15 kVA</div>
+      <div class="answer-item"><span>Q82</span>c. 30:1 (7,200÷240=30)</div>
+      <div class="answer-item"><span>Q83</span>b. Subtractive polarity</div>
+      <div class="answer-item"><span>Q84</span>c. 150 kVA (50+50+50)</div>
+      <div class="answer-item"><span>Q85</span>b. H1A/H1B = primary (high voltage); X1/X2/X3 = secondary (low voltage)</div>
+      <div class="answer-item"><span>Q86</span>b. Wye / grounded neutral</div>
+      <div class="answer-item"><span>Q87</span>b. X1 and X3 (two hot legs)</div>
+      <div class="answer-item"><span>Q88</span>b. Tap changer / de-energize first</div>
+      <div class="answer-item"><span>Q89</span>b. Excessive heat / insulation damage</div>
+      <div class="answer-item"><span>Q90</span>b. Transformer B = CSP (internal protection + status light); Transformer A = conventional (needs external cutout)</div>
+      <div class="answer-item"><span>Q91</span>b. Single-phase 120/240V — center-tap neutral gives 120V to either hot, 240V across both hots</div>
+      <div class="answer-item"><span>Q92</span>b. X1 to X3 = 240V; X1 or X3 to X2 (neutral) = 120V</div>
+      <div class="answer-item"><span>Q93</span>b. 167 kVA — larger capacity handles higher commercial demand</div>
+      <div class="answer-item"><span>Q94</span>b. Up to 25,000 VA before overheating</div>
+      <div class="answer-item"><span>Q95</span>b. Padmount transformer — H bushings = underground primary; X bushings = underground secondary to customer</div>
+      <div class="answer-item"><span>Q96</span>b. Voltage regulation — V drop from no-load to full-load</div>
+      <div class="answer-item"><span>Q97</span>b. White conductor — center-tap neutral at 0V; 120V to either hot, 240V across both hots</div>
+      <div class="answer-item"><span>Q98</span>b. Fins = radiate heat; valve = pressure relief; ground wire = safety ground; nameplate = ratings</div>
+      <div class="answer-item"><span>Q99</span>b. Lightning / switching surges</div>
+      <div class="answer-item"><span>Q100</span>b. Heat lost in core + winding resistance</div>
     </div>
 
-  </div><!-- end answerKey -->
-</div><!-- end key page -->
+  </div>
+</div>
 
 </main>
-
 <footer>Northwest Lineman College · Transformer Module Study Guide · PhaseShift Education</footer>
-
 <script>
-  function showPage(id) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById(id).classList.add('active');
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
-    window.scrollTo(0,0);
-  }
-
-  function toggleKey() {
-    const key = document.getElementById('answerKey');
-    key.classList.toggle('visible');
-  }
+function showPage(id,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+function toggleKey(){
+  document.getElementById('answerKey').classList.toggle('visible');
+}
 </script>
-
 </body>
 </html>
