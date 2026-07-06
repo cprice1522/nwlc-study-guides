@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three-Phase Connections & Open Banks Study Guide — NWLC</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Sans+3:wght@400;600&display=swap');
+:root{--red:#8B1A1A;--dark:#1a1a1a;--light-gray:#f0f0f0;--accent:#c8a84b;--white:#fff;--correct:#2d6a4f;--wrong:#c0392b;--border:#d0d0d0;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Source Sans 3',sans-serif;background:var(--light-gray);color:var(--dark);font-size:16px;line-height:1.6;}
+header{background:var(--red);color:var(--white);padding:2rem 2.5rem 1.5rem;border-bottom:5px solid var(--accent);}
+header .eyebrow{font-family:'Oswald',sans-serif;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;}
+header h1{font-family:'Oswald',sans-serif;font-size:2rem;font-weight:700;line-height:1.1;}
+header p{margin-top:.5rem;font-size:.9rem;opacity:.85;}
+nav{display:flex;gap:.75rem;padding:.75rem 2rem;background:var(--dark);position:sticky;top:0;z-index:100;flex-wrap:wrap;}
+nav button{font-family:'Oswald',sans-serif;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;padding:.45rem 1rem;border:2px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;transition:background .2s,color .2s;}
+nav button.active,nav button:hover{background:var(--accent);color:var(--dark);}
+main{max-width:960px;margin:2rem auto;padding:0 1.5rem 4rem;}
+.slbl{font-family:'Oswald',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:1.2rem;padding-bottom:.4rem;border-bottom:3px solid var(--red);margin-top:2rem;}
+.qb{background:var(--white);border-left:4px solid var(--border);padding:1.1rem 1.4rem;margin-bottom:1rem;transition:border-color .2s;}
+.qb:hover{border-left-color:var(--red);}
+.qb.correct{border-left-color:var(--correct);background:#f0fff4;}
+.qb.wrong{border-left-color:var(--wrong);background:#fff5f5;}
+.qnum{font-family:'Oswald',sans-serif;font-size:.75rem;color:var(--red);font-weight:600;letter-spacing:.1em;margin-bottom:.3rem;}
+.qb p{font-weight:600;margin-bottom:.7rem;font-size:.97rem;}
+.hint{background:#e8f4f8;border-left:3px solid #2980b9;padding:.4rem .7rem;margin-bottom:.6rem;font-size:.84rem;color:#1a3a4a;border-radius:2px;}
+.mhint{background:#fff8e1;border-left:3px solid var(--accent);padding:.4rem .7rem;margin-bottom:.6rem;font-size:.84rem;color:#5a4000;border-radius:2px;}
+.opts label{display:block;padding:.38rem .6rem;margin-bottom:.22rem;cursor:pointer;border-radius:2px;transition:background .15s;font-size:.92rem;}
+.opts label:hover{background:#f5eded;}
+.opts input[type=radio]{margin-right:.45rem;accent-color:var(--red);}
+.fb{display:none;font-size:.84rem;font-weight:600;margin-top:.45rem;padding:.35rem .65rem;border-radius:3px;}
+.fb.show{display:block;}
+.fb.cfb{background:#e8f5e9;color:var(--correct);}
+.fb.wfb{background:#ffebee;color:var(--wrong);}
+.chkbtn{background:var(--red);color:var(--white);font-family:'Oswald',sans-serif;font-size:1rem;letter-spacing:.12em;text-transform:uppercase;padding:.9rem 2.5rem;border:none;cursor:pointer;display:block;margin:2rem auto;transition:background .2s;}
+.chkbtn:hover{background:#6a1212;}
+.scorebox{background:var(--dark);color:var(--white);text-align:center;padding:1.5rem;border-radius:4px;margin-bottom:2rem;display:none;}
+.scorebox.show{display:block;}
+.scorebox .big{font-family:'Oswald',sans-serif;font-size:2.4rem;color:var(--accent);}
+.scorebox p{font-size:.9rem;opacity:.85;margin-top:.3rem;}
+.page{display:none;}
+.page.active{display:block;}
+.keybtn{background:var(--red);color:var(--white);font-family:'Oswald',sans-serif;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;padding:.65rem 1.7rem;border:none;cursor:pointer;margin-bottom:1.4rem;}
+.keybtn:hover{background:#6a1212;}
+.akey{display:none;}
+.akey.visible{display:block;}
+.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:.5rem;}
+.ai{background:var(--white);padding:.5rem .7rem;border-left:3px solid var(--correct);font-size:.82rem;}
+.ai span{font-family:'Oswald',sans-serif;font-weight:700;color:var(--red);font-size:.7rem;display:block;letter-spacing:.05em;}
+.klbl{font-family:'Oswald',sans-serif;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--correct);margin:1rem 0 .5rem;padding-bottom:.3rem;border-bottom:2px solid var(--correct);}
+.qrs{background:var(--white);border-radius:4px;padding:1.4rem;margin-bottom:1.1rem;border-left:5px solid var(--accent);}
+.qrs h3{font-family:'Oswald',sans-serif;font-size:.95rem;color:var(--red);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem;padding-bottom:.35rem;border-bottom:1px solid var(--border);}
+.qrs p,.qrs li{font-size:.88rem;line-height:1.6;color:#333;}
+.qrs ul{padding-left:1.1rem;margin-top:.35rem;}
+.qrs li{margin-bottom:.28rem;}
+.qt{width:100%;border-collapse:collapse;font-size:.83rem;margin-top:.55rem;}
+.qt th{background:var(--red);color:var(--white);padding:.45rem .7rem;text-align:left;font-family:'Oswald',sans-serif;font-weight:400;letter-spacing:.05em;}
+.qt td{padding:.42rem .7rem;border-bottom:1px solid var(--border);}
+.qt tr:nth-child(even) td{background:#fafafa;}
+.wbox{background:#fff3cd;border-left:4px solid #f0a500;padding:.65rem .9rem;margin:.55rem 0;font-size:.86rem;border-radius:2px;}
+.wbox strong{color:#8a5500;}
+.diagram-card{background:var(--white);border:2px solid var(--border);border-radius:4px;margin-bottom:1.5rem;overflow:hidden;}
+.diagram-card .dc-header{background:var(--red);color:var(--white);font-family:'Oswald',sans-serif;padding:.6rem 1rem;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;}
+.diagram-card .dc-body{display:grid;grid-template-columns:1fr 1fr;gap:0;}
+.diagram-card .dc-specs{padding:1rem 1.2rem;border-right:1px solid var(--border);}
+.diagram-card .dc-specs h4{font-family:'Oswald',sans-serif;font-size:.78rem;color:var(--red);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;}
+.diagram-card .dc-specs p{font-size:.85rem;margin-bottom:.2rem;}
+.diagram-card .dc-specs strong{color:var(--dark);}
+.voltage-table{width:100%;border-collapse:collapse;font-size:.83rem;margin-top:.5rem;}
+.voltage-table th{background:#2d6a4f;color:white;padding:.35rem .6rem;font-family:'Oswald',sans-serif;font-weight:400;font-size:.75rem;letter-spacing:.05em;}
+.voltage-table td{padding:.35rem .6rem;border-bottom:1px solid #ddd;}
+.voltage-table tr:nth-child(even) td{background:#f9f9f9;}
+.voltage-table .ans{font-weight:700;color:var(--correct);}
+.diagram-pole{padding:1rem;display:flex;align-items:center;justify-content:center;}
+.pole-svg{width:100%;max-width:280px;}
+footer{text-align:center;padding:1.4rem;background:var(--dark);color:#aaa;font-size:.78rem;}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">Northwest Lineman College &middot; Electrical Lineworker Program</div>
+<h1>Three-Phase Connections &amp; Open Banks Study Guide</h1>
+<p>50 Questions &mdash; Chapter 6 &middot; Banking &middot; Transformer Selection &middot; Delta &amp; Wye &middot; Open Banks &middot; Voltage ID</p>
+</header>
+<nav>
+<button class="active" onclick="showPage('questions',this)">Study Questions</button>
+<button onclick="showPage('key',this)">Answer Key</button>
+<button onclick="showPage('diagrams',this)">Voltage ID</button>
+<button onclick="showPage('ref',this)">Quick Reference</button>
+</nav>
+<main>
+
+<!-- QUESTIONS PAGE -->
+<div class="page active" id="questions">
+<div id="scorebox" class="scorebox"><div class="big" id="scoretext">0/50</div><p id="scoremsg">Complete all questions and click Check My Work.</p></div>
+
+<div class="slbl">Section 1 &mdash; Three-Phase Banking Fundamentals (Q1&ndash;12)</div>
+
+<div class="qb" id="qb1"><div class="qnum">Question 1</div><p>A three-phase service can be supplied by:</p><div class="opts"><label><input type="radio" name="q1" value="a"> a. Banking one single-phase unit with a three-phase service</label><label><input type="radio" name="q1" value="b"> b. Three interconnected single-phase units</label><label><input type="radio" name="q1" value="c"> c. One single-phase unit</label><label><input type="radio" name="q1" value="d"> d. Two single-phase units connected with an open-wye secondary</label></div><div class="fb" id="fb1"></div></div>
+
+<div class="qb" id="qb2"><div class="qnum">Question 2</div><p>Why do utility companies prefer banking three single-phase transformers over using one three-phase transformer unit?</p><div class="opts"><label><input type="radio" name="q2" value="a"> a. Three-phase transformers are heavier and harder to transport</label><label><input type="radio" name="q2" value="b"> b. Single-phase transformers are easier to install than three-phase units</label><label><input type="radio" name="q2" value="c"> c. Three-phase transformers are preferred because they have multiple applications</label><label><input type="radio" name="q2" value="d"> d. It is easier and less expensive to replace one single-phase unit in a bank</label></div><div class="fb" id="fb2"></div></div>
+
+<div class="qb" id="qb3"><div class="qnum">Question 3</div><p>A three-phase transformer unit is basically:</p><div class="opts"><label><input type="radio" name="q3" value="a"> a. Three delta-connected coils inside a wye configuration</label><label><input type="radio" name="q3" value="b"> b. Three single-phase transformers inside a single tank</label><label><input type="radio" name="q3" value="c"> c. One large primary coil connected to three separate secondary coils</label><label><input type="radio" name="q3" value="d"> d. A special transformer requiring only two primary phases</label></div><div class="fb" id="fb3"></div></div>
+
+<div class="qb" id="qb4"><div class="qnum">Question 4</div><p>Single-phase transformers offer greater flexibility than three-phase transformers because they can be:</p><div class="opts"><label><input type="radio" name="q4" value="a"> a. Operated at higher voltages without modification</label><label><input type="radio" name="q4" value="b"> b. Used for single-phase services individually OR banked for three-phase services</label><label><input type="radio" name="q4" value="c"> c. Installed without checking the nameplate</label><label><input type="radio" name="q4" value="d"> d. Operated at any impedance level without de-rating</label></div><div class="fb" id="fb4"></div></div>
+
+<div class="qb" id="qb5"><div class="qnum">Question 5</div><p>What is the FIRST thing to compare when selecting a single-phase transformer that will be banked or paralleled with others?</p><div class="opts"><label><input type="radio" name="q5" value="a"> a. Verify the kVA rating</label><label><input type="radio" name="q5" value="b"> b. Verify impedance</label><label><input type="radio" name="q5" value="c"> c. Compare the circuit and service voltages with the transformer voltage rating on the nameplate</label><label><input type="radio" name="q5" value="d"> d. Install the transformer and test it under load</label></div><div class="fb" id="fb5"></div></div>
+
+<div class="qb" id="qb6"><div class="qnum">Question 6</div><p>The engineering department usually determines the transformer size (kVA) prior to the installation process.</p><div class="opts"><label><input type="radio" name="q6" value="a"> a. True</label><label><input type="radio" name="q6" value="b"> b. False</label></div><div class="fb" id="fb6"></div></div>
+
+<div class="qb" id="qb7"><div class="qnum">Question 7</div><p>Which of the following is NOT one of the six criteria for selecting single-phase transformers for a bank?</p><div class="opts"><label><input type="radio" name="q7" value="a"> a. Circuit voltage</label><label><input type="radio" name="q7" value="b"> b. Polarity</label><label><input type="radio" name="q7" value="c"> c. Impedance</label><label><input type="radio" name="q7" value="d"> d. Oil type</label></div><div class="fb" id="fb7"></div></div>
+
+<div class="qb" id="qb8"><div class="qnum">Question 8</div><p>A lineworker is pulling transformers from a material yard for a Delta-secondary bank that will serve a combination of single-phase and three-phase loads. How should the kVA sizes of the three transformers be selected?</p><div class="opts"><label><input type="radio" name="q8" value="a"> a. All three must be the same size — Delta banks always share load equally between all three units</label><label><input type="radio" name="q8" value="b"> b. Usually one transformer of greater size — it carries two-thirds of the single-phase load and one-third of the three-phase load</label><label><input type="radio" name="q8" value="c"> c. Two larger units and one smaller — the two larger units handle the three-phase load and the smaller handles single-phase</label><label><input type="radio" name="q8" value="d"> d. kVA size does not matter in a Delta bank — any combination works as long as total kVA is sufficient</label></div><div class="fb" id="fb8"></div></div>
+
+<div class="qb" id="qb9"><div class="qnum">Question 9</div><p>In a Delta-connected secondary bank serving combination single- and three-phase loads, why is one transformer usually larger than the other two?</p><div class="opts"><label><input type="radio" name="q9" value="a"> a. To compensate for higher system voltage on one phase</label><label><input type="radio" name="q9" value="b"> b. Because the larger transformer carries two-thirds of the single-phase load and one-third of the three-phase load</label><label><input type="radio" name="q9" value="c"> c. Because delta connections require unequal transformer sizes</label><label><input type="radio" name="q9" value="d"> d. To provide a power leg on the secondary</label></div><div class="fb" id="fb9"></div></div>
+
+<div class="qb" id="qb10"><div class="qnum">Question 10</div><p>By industry standards, which transformers are rated additive polarity?</p><div class="opts"><label><input type="radio" name="q10" value="a"> a. All transformers rated above 200 kVA</label><label><input type="radio" name="q10" value="b"> b. Transformers rated 200 kVA and smaller with a primary rating of 8,660 volts and below</label><label><input type="radio" name="q10" value="c"> c. All transformers regardless of kVA or voltage rating</label><label><input type="radio" name="q10" value="d"> d. Transformers rated above 8,660 volts regardless of kVA</label></div><div class="fb" id="fb10"></div></div>
+
+<div class="qb" id="qb11"><div class="qnum">Question 11</div><p>If connected correctly, using transformers of different polarity in a bank will work electrically but can cause:</p><div class="opts"><label><input type="radio" name="q11" value="a"> a. Immediate transformer failure</label><label><input type="radio" name="q11" value="b"> b. Higher secondary voltages than rated</label><label><input type="radio" name="q11" value="c"> c. Confusion for lineworkers who may need to work on the bank in the future, and serious safety concerns</label><label><input type="radio" name="q11" value="d"> d. Increased impedance that protects against overloading</label></div><div class="fb" id="fb11"></div></div>
+
+<div class="qb" id="qb12"><div class="qnum">Question 12</div><p>What happens when mismatched impedances exist between paralleled units or banks?</p><div class="opts"><label><input type="radio" name="q12" value="a"> a. The transformers automatically balance the load through magnetic coupling</label><label><input type="radio" name="q12" value="b"> b. The highest impedance transformer supplies a greater share of the load</label><label><input type="radio" name="q12" value="c"> c. A de-rating is required because the load does not divide in proportion to the kVA ratings — the lowest impedance unit carries more load and may be overloaded</label><label><input type="radio" name="q12" value="d"> d. The bank will not energize until impedances are matched</label></div><div class="fb" id="fb12"></div></div>
+
+<div class="slbl">Section 2 &mdash; Delta &amp; Wye Connections (Q13&ndash;30)</div>
+
+<div class="qb" id="qb13"><div class="qnum">Question 13</div><p>To supply three-phase power, each connection must create a potential difference across a transformer coil. This can be done in two ways:</p><div class="opts"><label><input type="radio" name="q13" value="a"> a. Phase-to-phase (Wye) or phase-to-neutral (Delta)</label><label><input type="radio" name="q13" value="b"> b. Phase-to-phase (Delta) or phase-to-neutral (Wye)</label><label><input type="radio" name="q13" value="c"> c. Phase-to-ground (Delta) or phase-to-phase (Wye)</label><label><input type="radio" name="q13" value="d"> d. Phase-to-neutral (Delta) or phase-to-ground (Wye)</label></div><div class="fb" id="fb13"></div></div>
+
+<div class="qb" id="qb14"><div class="qnum">Question 14</div><p>A Delta connection is schematically drawn as:</p><div class="opts"><label><input type="radio" name="q14" value="a"> a. A capital letter Y or star shape</label><label><input type="radio" name="q14" value="b"> b. A triangle or like the Greek letter Delta (&Delta;)</label><label><input type="radio" name="q14" value="c"> c. A straight horizontal line connecting all three phases</label><label><input type="radio" name="q14" value="d"> d. A circle with three coils arranged radially</label></div><div class="fb" id="fb14"></div></div>
+
+<div class="qb" id="qb15"><div class="qnum">Question 15</div><p>In a Delta primary connection, which statement describes how the transformers are connected?</p><div class="opts"><label><input type="radio" name="q15" value="a"> a. H1s to phases and H2s connected together</label><label><input type="radio" name="q15" value="b"> b. H1 connects to H2 "all the way around" — each transformer connected phase to phase</label><label><input type="radio" name="q15" value="c"> c. All H1s connected together and all H2s connected together</label><label><input type="radio" name="q15" value="d"> d. H1 to the system neutral and H2 to the phase</label></div><div class="fb" id="fb15"></div></div>
+
+<div class="qb" id="qb16"><div class="qnum">Question 16</div><p>In a Delta secondary connection, the bushing connection rule is:</p><div class="opts"><label><input type="radio" name="q16" value="a"> a. X1 connects to X2 all the way around</label><label><input type="radio" name="q16" value="b"> b. X1 to hot legs and X2s connect together and are grounded</label><label><input type="radio" name="q16" value="c"> c. X1 connects to X3 "all the way around"</label><label><input type="radio" name="q16" value="d"> d. X2s connect to the system neutral and X1s to the phases</label></div><div class="fb" id="fb16"></div></div>
+
+<div class="qb" id="qb17"><div class="qnum">Question 17</div><p>In a Delta system, how does the coil voltage compare to the line voltage?</p><div class="opts"><label><input type="radio" name="q17" value="a"> a. Coil voltage is 1.732 times higher than line voltage</label><label><input type="radio" name="q17" value="b"> b. Coil voltage equals the line voltage</label><label><input type="radio" name="q17" value="c"> c. Coil voltage is 1.732 times lower than line voltage</label><label><input type="radio" name="q17" value="d"> d. Coil voltage is half the line voltage</label></div><div class="fb" id="fb17"></div></div>
+
+<div class="qb" id="qb18"><div class="qnum">Question 18</div><p>In a Delta system, the phase current is:</p><div class="opts"><label><input type="radio" name="q18" value="a"> a. Equal to the coil current</label><label><input type="radio" name="q18" value="b"> b. 1.732 times LOWER than the coil current</label><label><input type="radio" name="q18" value="c"> c. 1.732 times HIGHER than the coil current</label><label><input type="radio" name="q18" value="d"> d. Exactly double the coil current</label></div><div class="fb" id="fb18"></div></div>
+
+<div class="qb" id="qb19"><div class="qnum">Question 19</div><p>In a Delta circuit, electrical current returns to the source through:</p><div class="opts"><label><input type="radio" name="q19" value="a"> a. The earth/ground conductor</label><label><input type="radio" name="q19" value="b"> b. The system neutral conductor</label><label><input type="radio" name="q19" value="c"> c. The opposing phase conductors — there is no return flow through the earth</label><label><input type="radio" name="q19" value="d"> d. The X2 grounded bushing</label></div><div class="fb" id="fb19"></div></div>
+
+<div class="qb" id="qb20"><div class="qnum">Question 20</div><p>In a Wye connection, which statement describes how the primaries are connected?</p><div class="opts"><label><input type="radio" name="q20" value="a"> a. H1 connects to H2 all the way around</label><label><input type="radio" name="q20" value="b"> b. H1s connect to phases and H2s connect together (may or may not be grounded)</label><label><input type="radio" name="q20" value="c"> c. H1 and H2 both connect to the system neutral</label><label><input type="radio" name="q20" value="d"> d. H2s connect to phases and H1s connect together</label></div><div class="fb" id="fb20"></div></div>
+
+<div class="qb" id="qb21"><div class="qnum">Question 21</div><p>In a Delta secondary connection, a positive terminal is always connected to a negative terminal and then to the phase. What does this mean for Delta banks regardless of whether the transformers are additive or subtractive polarity?</p><div class="opts"><label><input type="radio" name="q21" value="a"> a. Delta banks with different polarity transformers will not energize and must be rewired before use</label><label><input type="radio" name="q21" value="b"> b. Delta banks present the same physical appearance regardless of transformer polarity</label><label><input type="radio" name="q21" value="c"> c. Delta banks with subtractive polarity transformers produce higher secondary voltage than additive polarity banks</label><label><input type="radio" name="q21" value="d"> d. Polarity does not matter at all in a Delta bank — any terminal can connect to any phase</label></div><div class="fb" id="fb21"></div></div>
+
+<div class="qb" id="qb22"><div class="qnum">Question 22</div><p>In a Wye system, the system voltage is _____ times higher than the coil voltage.</p><div class="opts"><label><input type="radio" name="q22" value="a"> a. 2.0</label><label><input type="radio" name="q22" value="b"> b. 1.5</label><label><input type="radio" name="q22" value="c"> c. 1.732</label><label><input type="radio" name="q22" value="d"> d. 3.0</label></div><div class="fb" id="fb22"></div></div>
+
+<div class="qb" id="qb23"><div class="qnum">Question 23</div><p>In a Wye system, how does the coil current compare to the phase current?</p><div class="opts"><label><input type="radio" name="q23" value="a"> a. Coil current is 1.732 times higher than phase current</label><label><input type="radio" name="q23" value="b"> b. Coil current equals phase current</label><label><input type="radio" name="q23" value="c"> c. Coil current is 1.732 times lower than phase current</label><label><input type="radio" name="q23" value="d"> d. Coil current is double the phase current</label></div><div class="fb" id="fb23"></div></div>
+
+<div class="qb" id="qb24"><div class="qnum">Question 24</div><p>The neutral is the common point of each transformer winding on a Wye system. If the load on each of the three phases were balanced, there would be:</p><div class="opts"><label><input type="radio" name="q24" value="a"> a. Maximum current flowing in the neutral</label><label><input type="radio" name="q24" value="b"> b. No current flow in the neutral</label><label><input type="radio" name="q24" value="c"> c. A current equal to one-third of the phase current in the neutral</label><label><input type="radio" name="q24" value="d"> d. Voltage equal to the phase voltage in the neutral</label></div><div class="fb" id="fb24"></div></div>
+
+<div class="qb" id="qb25"><div class="qnum">Question 25</div><p>The Wye Primary Connection Rule states: if the primary coil voltage ratings match the _____ voltage of the system, connect Wye.</p><div class="opts"><label><input type="radio" name="q25" value="a"> a. Phase-to-phase</label><label><input type="radio" name="q25" value="b"> b. Phase-to-ground</label><label><input type="radio" name="q25" value="c"> c. Phase-to-neutral</label><label><input type="radio" name="q25" value="d"> d. System delta</label></div><div class="fb" id="fb25"></div></div>
+
+<div class="qb" id="qb26"><div class="qnum">Question 26</div><p>The Delta Primary Connection Rule states: if the primary coil voltage ratings match the _____ voltage of the system, connect Delta.</p><div class="opts"><label><input type="radio" name="q26" value="a"> a. Phase-to-neutral</label><label><input type="radio" name="q26" value="b"> b. Phase-to-ground</label><label><input type="radio" name="q26" value="c"> c. Phase-to-phase</label><label><input type="radio" name="q26" value="d"> d. Wye voltage</label></div><div class="fb" id="fb26"></div></div>
+
+<div class="qb" id="qb27"><div class="qnum">Question 27</div><p>A transformer nameplate shows only ONE voltage number (e.g., 12,000) as the primary coil voltage rating. It should be used for:</p><div class="opts"><label><input type="radio" name="q27" value="a"> a. Wye connections only</label><label><input type="radio" name="q27" value="b"> b. Either Delta or Wye depending on system voltage</label><label><input type="radio" name="q27" value="c"> c. Delta connections only</label><label><input type="radio" name="q27" value="d"> d. Open bank configurations only</label></div><div class="fb" id="fb27"></div></div>
+
+<div class="qb" id="qb28"><div class="qnum">Question 28</div><p>Delta connections cannot be derived from single bushing transformers because:</p><div class="opts"><label><input type="radio" name="q28" value="a"> a. Single bushing transformers do not have sufficient kVA ratings for three-phase loads</label><label><input type="radio" name="q28" value="b"> b. The transformers must have two primary bushings for a Delta connection</label><label><input type="radio" name="q28" value="c"> c. Single bushing transformers have subtractive polarity only</label><label><input type="radio" name="q28" value="d"> d. Single bushing transformers cannot be paralleled</label></div><div class="fb" id="fb28"></div></div>
+
+<div class="qb" id="qb29"><div class="qnum">Question 29</div><p>On a single-phase transformer, which bushings are always positive?</p><div class="opts"><label><input type="radio" name="q29" value="a"> a. H-2 and X-3</label><label><input type="radio" name="q29" value="b"> b. H-1 and X-1</label><label><input type="radio" name="q29" value="c"> c. H-2 and X-1</label><label><input type="radio" name="q29" value="d"> d. H-1 and X-3</label></div><div class="fb" id="fb29"></div></div>
+
+<div class="qb" id="qb30"><div class="qnum">Question 30</div><p>When making a Wye connection, how are the positive and negative polarity terminals of the transformer coils arranged?</p><div class="opts"><label><input type="radio" name="q30" value="a"> a. Positive terminals (H1, X1) are all connected together at the neutral point, and negative terminals connect to the phases</label><label><input type="radio" name="q30" value="b"> b. Negative polarity terminals are all connected together, and the positive terminals are each connected to their individual phase</label><label><input type="radio" name="q30" value="c"> c. Positive terminals connect to the neutral and negative terminals connect to the opposing phases in sequence</label><label><input type="radio" name="q30" value="d"> d. All positive and negative terminals are tied together at a single common point</label></div><div class="fb" id="fb30"></div></div>
+
+<div class="slbl">Section 3 &mdash; Open Banks (Q31&ndash;44)</div>
+
+<div class="qb" id="qb31"><div class="qnum">Question 31</div><p>Why is the term "open bank" used to describe a two-transformer bank?</p><div class="opts"><label><input type="radio" name="q31" value="a"> a. Because it takes three phases to produce three-phase power in an open bank</label><label><input type="radio" name="q31" value="b"> b. With only two transformers, the delta or wye configuration is incomplete — one leg is gone or "open"</label><label><input type="radio" name="q31" value="c"> c. Because the bank can only produce open-wye secondary</label><label><input type="radio" name="q31" value="d"> d. Because they are only 57.7% efficient</label></div><div class="fb" id="fb31"></div></div>
+
+<div class="qb" id="qb32"><div class="qnum">Question 32</div><p>Open banks are approximately _____ as efficient as closed banks.</p><div class="opts"><label><input type="radio" name="q32" value="a"> a. 75%</label><label><input type="radio" name="q32" value="b"> b. 86.6%</label><label><input type="radio" name="q32" value="c"> c. 57.7%</label><label><input type="radio" name="q32" value="d"> d. 66.7%</label></div><div class="fb" id="fb32"></div></div>
+
+<div class="qb" id="qb33"><div class="qnum">Question 33</div><p>In an open bank, the transformer that supplies the bulk of the single-phase "lighting" load is called the:</p><div class="opts"><label><input type="radio" name="q33" value="a"> a. Power transformer</label><label><input type="radio" name="q33" value="b"> b. Lighter transformer</label><label><input type="radio" name="q33" value="c"> c. Delta transformer</label><label><input type="radio" name="q33" value="d"> d. Lead transformer</label></div><div class="fb" id="fb33"></div></div>
+
+<div class="qb" id="qb34"><div class="qnum">Question 34</div><p>In an open bank, the transformer that provides the third phase (the "power leg") is called the:</p><div class="opts"><label><input type="radio" name="q34" value="a"> a. Lighter transformer</label><label><input type="radio" name="q34" value="b"> b. Lead transformer</label><label><input type="radio" name="q34" value="c"> c. Power transformer — it is smaller in kVA</label><label><input type="radio" name="q34" value="d"> d. Wye transformer</label></div><div class="fb" id="fb34"></div></div>
+
+<div class="qb" id="qb35"><div class="qnum">Question 35</div><p>What is the lighter transformer in the bank that is usually higher kVA?</p><div class="opts"><label><input type="radio" name="q35" value="a"> a. The transformer that supplies the third phase only</label><label><input type="radio" name="q35" value="b"> b. The smaller of the transformers used in the bank</label><label><input type="radio" name="q35" value="c"> c. The transformer that has the power leg connected to it</label><label><input type="radio" name="q35" value="d"> d. The transformer in the bank that is usually higher kVA — it handles the bulk of the lighting load and part of the three-phase load</label></div><div class="fb" id="fb35"></div></div>
+
+<div class="qb" id="qb36"><div class="qnum">Question 36</div><p>Three-phase power CANNOT be derived from an open bank if the secondary is connected:</p><div class="opts"><label><input type="radio" name="q36" value="a"> a. Open Delta</label><label><input type="radio" name="q36" value="b"> b. Open Wye</label><label><input type="radio" name="q36" value="c"> c. Closed Delta</label><label><input type="radio" name="q36" value="d"> d. Phase-to-ground</label></div><div class="fb" id="fb36"></div></div>
+
+<div class="qb" id="qb37"><div class="qnum">Question 37</div><p>When three-phase power is to be delivered using open banks, the secondary connection will always be:</p><div class="opts"><label><input type="radio" name="q37" value="a"> a. Open Wye</label><label><input type="radio" name="q37" value="b"> b. Open Delta</label><label><input type="radio" name="q37" value="c"> c. Closed Wye</label><label><input type="radio" name="q37" value="d"> d. Phase-to-neutral</label></div><div class="fb" id="fb37"></div></div>
+
+<div class="qb" id="qb38"><div class="qnum">Question 38</div><p>Open Delta &ndash; Open Delta banks are used when:</p><div class="opts"><label><input type="radio" name="q38" value="a"> a. The three-phase load is much larger than the single-phase load</label><label><input type="radio" name="q38" value="b"> b. The single-phase load is predominant over the three-phase load</label><label><input type="radio" name="q38" value="c"> c. The system neutral is not available</label><label><input type="radio" name="q38" value="d"> d. The customer requires a 480-volt motor load</label></div><div class="fb" id="fb38"></div></div>
+
+<div class="qb" id="qb39"><div class="qnum">Question 39</div><p>The voltage output of an Open Delta bank is:</p><div class="opts"><label><input type="radio" name="q39" value="a"> a. Higher than a closed Delta bank because only two transformers carry the load</label><label><input type="radio" name="q39" value="b"> b. The same as a Delta secondary utilizing three transformers</label><label><input type="radio" name="q39" value="c"> c. Lower than a closed Delta bank due to the 57.7% efficiency factor</label><label><input type="radio" name="q39" value="d"> d. 1.732 times the single transformer secondary voltage</label></div><div class="fb" id="fb39"></div></div>
+
+<div class="qb" id="qb40"><div class="qnum">Question 40</div><p>If one transformer of a three-transformer bank with a Delta secondary goes bad, what can be done as a temporary emergency measure?</p><div class="opts"><label><input type="radio" name="q40" value="a"> a. The bank must be completely de-energized until the transformer is replaced</label><label><input type="radio" name="q40" value="b"> b. The two remaining transformers are switched to a wye configuration</label><label><input type="radio" name="q40" value="c"> c. The bank can be temporarily re-wired as an open bank to maintain three-phase service</label><label><input type="radio" name="q40" value="d"> d. A single-phase bypass is installed and three-phase service is discontinued</label></div><div class="fb" id="fb40"></div></div>
+
+<div class="qb" id="qb41"><div class="qnum">Question 41</div><p>Open Wye &ndash; Open Delta banks require only:</p><div class="opts"><label><input type="radio" name="q41" value="a"> a. Three primary phases and no system neutral</label><label><input type="radio" name="q41" value="b"> b. Two primary phases and a system neutral</label><label><input type="radio" name="q41" value="c"> c. One primary phase and a system neutral</label><label><input type="radio" name="q41" value="d"> d. Three primary phases and a system neutral</label></div><div class="fb" id="fb41"></div></div>
+
+<div class="qb" id="qb42"><div class="qnum">Question 42</div><p>An Open Wye &ndash; Open Delta bank can be connected in two different ways. What factor do utilities use to determine which of the two connection methods to use?</p><div class="opts"><label><input type="radio" name="q42" value="a"> a. Which method produces the higher output voltage for the customer</label><label><input type="radio" name="q42" value="b"> b. Construction methods, clearance requirements, squirrel and bird problems, and other similar field factors</label><label><input type="radio" name="q42" value="c"> c. Which connection uses fewer conductors and saves material cost</label><label><input type="radio" name="q42" value="d"> d. The kVA rating of the lighter transformer determines which method is used</label></div><div class="fb" id="fb42"></div></div>
+
+<div class="qb" id="qb43"><div class="qnum">Question 43</div><p>Why is an Open Delta secondary always required when delivering three-phase power from an open bank — and never an Open Wye secondary?</p><div class="opts"><label><input type="radio" name="q43" value="a"> a. Open Wye produces too high a voltage on the power leg, exceeding equipment ratings</label><label><input type="radio" name="q43" value="b"> b. Open Wye secondaries do not produce enough current to serve three-phase loads</label><label><input type="radio" name="q43" value="c"> c. Three-phase power cannot be derived from an open bank if the secondary is connected Open Wye</label><label><input type="radio" name="q43" value="d"> d. Open Wye requires a third transformer to close the neutral, which defeats the purpose of an open bank</label></div><div class="fb" id="fb43"></div></div>
+
+<div class="qb" id="qb44"><div class="qnum">Question 44</div><p>A crew is setting up an Open Wye &ndash; Open Delta bank. A senior lineworker says this configuration can serve a customer who has both single-phase and three-phase loads, but with one important limitation compared to a full three-unit bank. What is that limitation?</p><div class="opts"><label><input type="radio" name="q44" value="a"> a. The open bank can only serve single-phase loads — it cannot produce any three-phase voltage</label><label><input type="radio" name="q44" value="b"> b. The open bank cannot serve any 240V single-phase loads — only 120V</label><label><input type="radio" name="q44" value="c"> c. The open bank requires a system neutral, so it can never be used on a delta primary system</label><label><input type="radio" name="q44" value="d"> d. The open bank is only approximately 57.7% as efficient as a closed three-unit bank</label></div><div class="fb" id="fb44"></div></div>
+
+<div class="slbl">Section 4 &mdash; Voltage &amp; Current Calculations (Q45&ndash;50)</div>
+
+<div class="qb" id="qb45"><div class="qnum">Question 45</div><p>A Delta-connected transformer bank is on a 7,200V system. What is the coil voltage of each transformer?</p><div class="mhint">&#128161; Delta: Coil Voltage = System Voltage</div><div class="opts"><label><input type="radio" name="q45" value="a"> a. 4,157V</label><label><input type="radio" name="q45" value="b"> b. 12,470V</label><label><input type="radio" name="q45" value="c"> c. 7,200V</label><label><input type="radio" name="q45" value="d"> d. 3,600V</label></div><div class="fb" id="fb45"></div></div>
+
+<div class="qb" id="qb46"><div class="qnum">Question 46</div><p>A Wye-connected transformer bank is on a 12,470V system. What is the coil voltage of each transformer?</p><div class="mhint">&#128161; Wye: Coil Voltage = System Voltage &divide; 1.732</div><div class="opts"><label><input type="radio" name="q46" value="a"> a. 12,470V</label><label><input type="radio" name="q46" value="b"> b. 7,200V</label><label><input type="radio" name="q46" value="c"> c. 21,597V</label><label><input type="radio" name="q46" value="d"> d. 4,160V</label></div><div class="fb" id="fb46"></div></div>
+
+<div class="qb" id="qb47"><div class="qnum">Question 47</div><p>A Delta bank transformer has a coil current of 40A. What is the phase (line) current?</p><div class="mhint">&#128161; Delta: Phase Current = Coil Current &times; 1.732</div><div class="opts"><label><input type="radio" name="q47" value="a"> a. 40A</label><label><input type="radio" name="q47" value="b"> b. 23.1A</label><label><input type="radio" name="q47" value="c"> c. 80A</label><label><input type="radio" name="q47" value="d"> d. 69.3A</label></div><div class="fb" id="fb47"></div></div>
+
+<div class="qb" id="qb48"><div class="qnum">Question 48</div><p>A Wye bank transformer has a coil current of 40A. What is the phase (line) current?</p><div class="mhint">&#128161; Wye: Coil Current = Phase Current</div><div class="opts"><label><input type="radio" name="q48" value="a"> a. 69.3A</label><label><input type="radio" name="q48" value="b"> b. 23.1A</label><label><input type="radio" name="q48" value="c"> c. 80A</label><label><input type="radio" name="q48" value="d"> d. 40A</label></div><div class="fb" id="fb48"></div></div>
+
+<div class="qb" id="qb49"><div class="qnum">Question 49</div><p>A nameplate shows "7,200/12,470Y &mdash; 120/240V." The system is 7,200/12,470. Should this transformer be connected Delta or Wye on the primary? Why?</p><div class="opts"><label><input type="radio" name="q49" value="a"> a. Delta — because the primary coil voltage (7,200V) matches the phase-to-phase voltage (7,200V)</label><label><input type="radio" name="q49" value="b"> b. Wye — because the primary coil voltage (7,200V) matches the phase-to-neutral voltage of a 12,470V system</label><label><input type="radio" name="q49" value="c"> c. Either — because the nameplate shows two voltages</label><label><input type="radio" name="q49" value="d"> d. Delta — because the nameplate shows a Y designation</label></div><div class="fb" id="fb49"></div></div>
+
+<div class="qb" id="qb50"><div class="qnum">Question 50</div><p>Open banks almost exclusively serve _____ three-phase loads. If a customer has a 480-volt motor, the load is almost always substantial enough to require three transformer units.</p><div class="opts"><label><input type="radio" name="q50" value="a"> a. 240/480V</label><label><input type="radio" name="q50" value="b"> b. 120/240V</label><label><input type="radio" name="q50" value="c"> c. 480/277V</label><label><input type="radio" name="q50" value="d"> d. 120/208V</label></div><div class="fb" id="fb50"></div></div>
+
+<button class="chkbtn" onclick="checkAnswers()">&#10004; Check My Work</button>
+</div>
+
+<!-- VOLTAGE DIAGRAMS PAGE -->
+<div class="page" id="diagrams">
+<div class="slbl" style="margin-top:0;">Voltage ID</div>
+<p style="font-size:.9rem;margin-bottom:1.5rem;color:#444;">Use the information provided in each Voltage ID to draw the complete connection on your own paper, then fill in the secondary voltage blanks.</p>
+<div class="diagram-card" style="margin-bottom:1.8rem;background:var(--white,#fff);border:1.5px solid #d0d0d0;border-radius:6px;overflow:hidden;">
+
+  <div style="background:#8B1A1A;color:#fff;padding:.55rem 1rem;display:flex;align-items:center;gap:.75rem;">
+    <span style="background:#c8a84b;color:#3a1a00;font-size:11px;font-weight:600;border-radius:20px;padding:2px 12px;white-space:nowrap;font-family:'Oswald',sans-serif;letter-spacing:.05em;">Voltage ID 1</span>
+    <span style="font-size:13px;font-weight:500;font-family:'Oswald',sans-serif;letter-spacing:.04em;">System Voltage: 2,400 / 4,160 &nbsp;&middot;&nbsp; Service Needed: 120 / 240 3&#x3D5;</span>
+  </div>
+
+  <div style="background:#fff8e8;border-bottom:1px solid #e8d9aa;padding:.6rem 1rem;font-size:.84rem;color:#5a3e00;">
+    <strong style="color:#8B1A1A;">&#9998; Draw it:</strong> Using the information below, draw the complete open bank connection on your own paper before filling in the voltage blanks.
+  </div>
+
+  <div style="padding:1.2rem 1.4rem;">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.2rem;">
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Given Information</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;width:120px;">System Voltage</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">2,400 / 4,160</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Primary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">4,160</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Secondary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">120 / 240</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Service Needed</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">120 / 240 3&#x3D5;</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;">Connection Type</td><td style="padding:.35rem 0;font-weight:600;">Open delta primary</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Secondary Voltages</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr style="background:#f5f5f5;"><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Measurement</th><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Fill In</th></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to p</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;">h to h</td><td style="padding:.38rem .5rem;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div class="diagram-card" style="margin-bottom:1.8rem;background:var(--white,#fff);border:1.5px solid #d0d0d0;border-radius:6px;overflow:hidden;">
+
+  <div style="background:#8B1A1A;color:#fff;padding:.55rem 1rem;display:flex;align-items:center;gap:.75rem;">
+    <span style="background:#c8a84b;color:#3a1a00;font-size:11px;font-weight:600;border-radius:20px;padding:2px 12px;white-space:nowrap;font-family:'Oswald',sans-serif;letter-spacing:.05em;">Voltage ID 2</span>
+    <span style="font-size:13px;font-weight:500;font-family:'Oswald',sans-serif;letter-spacing:.04em;">System Voltage: 4,160 / 7,200 &nbsp;&middot;&nbsp; Service Needed: 120 / 240 3&#x3D5;</span>
+  </div>
+
+  <div style="background:#fff8e8;border-bottom:1px solid #e8d9aa;padding:.6rem 1rem;font-size:.84rem;color:#5a3e00;">
+    <strong style="color:#8B1A1A;">&#9998; Draw it:</strong> Using the information below, draw the complete open bank connection on your own paper before filling in the voltage blanks.
+  </div>
+
+  <div style="padding:1.2rem 1.4rem;">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.2rem;">
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Given Information</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;width:120px;">System Voltage</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">4,160 / 7,200</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Primary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">7,200 / 12,470Y</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Secondary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">120 / 240</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Service Needed</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">120 / 240 3&#x3D5;</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;">Connection Type</td><td style="padding:.35rem 0;font-weight:600;">Open wye primary</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Secondary Voltages</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr style="background:#f5f5f5;"><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Measurement</th><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Fill In</th></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to p</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;">h to h</td><td style="padding:.38rem .5rem;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div class="diagram-card" style="margin-bottom:1.8rem;background:var(--white,#fff);border:1.5px solid #d0d0d0;border-radius:6px;overflow:hidden;">
+
+  <div style="background:#8B1A1A;color:#fff;padding:.55rem 1rem;display:flex;align-items:center;gap:.75rem;">
+    <span style="background:#c8a84b;color:#3a1a00;font-size:11px;font-weight:600;border-radius:20px;padding:2px 12px;white-space:nowrap;font-family:'Oswald',sans-serif;letter-spacing:.05em;">Voltage ID 3</span>
+    <span style="font-size:13px;font-weight:500;font-family:'Oswald',sans-serif;letter-spacing:.04em;">System Voltage: 12,000 &nbsp;&middot;&nbsp; Service Needed: 120 / 240 3&#x3D5;</span>
+  </div>
+
+  <div style="background:#fff8e8;border-bottom:1px solid #e8d9aa;padding:.6rem 1rem;font-size:.84rem;color:#5a3e00;">
+    <strong style="color:#8B1A1A;">&#9998; Draw it:</strong> Using the information below, draw the complete open bank connection on your own paper before filling in the voltage blanks.
+  </div>
+
+  <div style="padding:1.2rem 1.4rem;">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.2rem;">
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Given Information</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;width:120px;">System Voltage</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">12,000</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Primary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">12,000 / 20,800Y</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Secondary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">120 / 240</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Service Needed</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">120 / 240 3&#x3D5;</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;">Connection Type</td><td style="padding:.35rem 0;font-weight:600;">Open delta primary</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Secondary Voltages</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr style="background:#f5f5f5;"><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Measurement</th><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Fill In</th></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to p</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;">h to h</td><td style="padding:.38rem .5rem;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div class="diagram-card" style="margin-bottom:1.8rem;background:var(--white,#fff);border:1.5px solid #d0d0d0;border-radius:6px;overflow:hidden;">
+
+  <div style="background:#8B1A1A;color:#fff;padding:.55rem 1rem;display:flex;align-items:center;gap:.75rem;">
+    <span style="background:#c8a84b;color:#3a1a00;font-size:11px;font-weight:600;border-radius:20px;padding:2px 12px;white-space:nowrap;font-family:'Oswald',sans-serif;letter-spacing:.05em;">Voltage ID 4</span>
+    <span style="font-size:13px;font-weight:500;font-family:'Oswald',sans-serif;letter-spacing:.04em;">System Voltage: 7,200 / 12,470 &nbsp;&middot;&nbsp; Service Needed: 120 / 240 3&#x3D5;</span>
+  </div>
+
+  <div style="background:#fff8e8;border-bottom:1px solid #e8d9aa;padding:.6rem 1rem;font-size:.84rem;color:#5a3e00;">
+    <strong style="color:#8B1A1A;">&#9998; Draw it:</strong> Using the information below, draw the complete open bank connection on your own paper before filling in the voltage blanks.
+  </div>
+
+  <div style="padding:1.2rem 1.4rem;">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.2rem;">
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Given Information</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;width:120px;">System Voltage</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">7,200 / 12,470</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Primary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">12,470</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Secondary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">120 / 240</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Service Needed</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">120 / 240 3&#x3D5;</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;">Connection Type</td><td style="padding:.35rem 0;font-weight:600;">Open delta primary</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Secondary Voltages</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr style="background:#f5f5f5;"><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Measurement</th><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Fill In</th></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to p</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;">h to h</td><td style="padding:.38rem .5rem;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div class="diagram-card" style="margin-bottom:1.8rem;background:var(--white,#fff);border:1.5px solid #d0d0d0;border-radius:6px;overflow:hidden;">
+
+  <div style="background:#8B1A1A;color:#fff;padding:.55rem 1rem;display:flex;align-items:center;gap:.75rem;">
+    <span style="background:#c8a84b;color:#3a1a00;font-size:11px;font-weight:600;border-radius:20px;padding:2px 12px;white-space:nowrap;font-family:'Oswald',sans-serif;letter-spacing:.05em;">Voltage ID 5</span>
+    <span style="font-size:13px;font-weight:500;font-family:'Oswald',sans-serif;letter-spacing:.04em;">System Voltage: 14,400 &nbsp;&middot;&nbsp; Service Needed: 240 / 480 3&#x3D5;</span>
+  </div>
+
+  <div style="background:#fff8e8;border-bottom:1px solid #e8d9aa;padding:.6rem 1rem;font-size:.84rem;color:#5a3e00;">
+    <strong style="color:#8B1A1A;">&#9998; Draw it:</strong> Using the information below, draw the complete open bank connection on your own paper before filling in the voltage blanks.
+  </div>
+
+  <div style="padding:1.2rem 1.4rem;">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.2rem;">
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Given Information</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;width:120px;">System Voltage</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">14,400</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Primary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">14,400</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Secondary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">240 / 480</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Service Needed</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">240 / 480 3&#x3D5;</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;">Connection Type</td><td style="padding:.35rem 0;font-weight:600;">Open delta primary</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Secondary Voltages</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr style="background:#f5f5f5;"><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Measurement</th><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Fill In</th></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to p</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;">h to h</td><td style="padding:.38rem .5rem;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div class="diagram-card" style="margin-bottom:1.8rem;background:var(--white,#fff);border:1.5px solid #d0d0d0;border-radius:6px;overflow:hidden;">
+
+  <div style="background:#8B1A1A;color:#fff;padding:.55rem 1rem;display:flex;align-items:center;gap:.75rem;">
+    <span style="background:#c8a84b;color:#3a1a00;font-size:11px;font-weight:600;border-radius:20px;padding:2px 12px;white-space:nowrap;font-family:'Oswald',sans-serif;letter-spacing:.05em;">Voltage ID 6</span>
+    <span style="font-size:13px;font-weight:500;font-family:'Oswald',sans-serif;letter-spacing:.04em;">System Voltage: 19,900 &nbsp;&middot;&nbsp; Service Needed: 120 / 240 3&#x3D5;</span>
+  </div>
+
+  <div style="background:#fff8e8;border-bottom:1px solid #e8d9aa;padding:.6rem 1rem;font-size:.84rem;color:#5a3e00;">
+    <strong style="color:#8B1A1A;">&#9998; Draw it:</strong> Using the information below, draw the complete open bank connection on your own paper before filling in the voltage blanks.
+  </div>
+
+  <div style="padding:1.2rem 1.4rem;">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.2rem;">
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Given Information</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;width:120px;">System Voltage</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">19,900</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Primary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">19,900 / 34,500Y</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Secondary Rating</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">120 / 240</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;border-bottom:1px solid #eee;">Service Needed</td><td style="padding:.35rem 0;font-weight:600;border-bottom:1px solid #eee;">120 / 240 3&#x3D5;</td></tr>
+          <tr><td style="padding:.35rem 0;color:#555;">Connection Type</td><td style="padding:.35rem 0;font-weight:600;">Open wye primary</td></tr>
+        </table>
+      </div>
+
+      <div>
+        <div style="font-family:'Oswald',sans-serif;font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:#8B1A1A;margin-bottom:.5rem;">Secondary Voltages</div>
+        <table style="width:100%;border-collapse:collapse;font-size:.88rem;">
+          <tr style="background:#f5f5f5;"><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Measurement</th><th style="padding:.32rem .5rem;text-align:left;font-family:'Oswald',sans-serif;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:#666;">Fill In</th></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to p</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">n to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;">p to h</td><td style="padding:.38rem .5rem;border-bottom:1px solid #eee;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+          <tr><td style="padding:.38rem .5rem;">h to h</td><td style="padding:.38rem .5rem;font-family:monospace;color:#bbb;letter-spacing:.08em;">_____ V</td></tr>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+<div class="qrs" style="margin-top:1rem;">
+<h3>Voltage ID Answer Key</h3>
+<table class="qt">
+<tr><th>ID #</th><th>System Voltage</th><th>Service</th><th>n&ndash;p</th><th>n&ndash;h</th><th>n&ndash;h</th><th>p&ndash;h</th><th>p&ndash;h</th><th>h&ndash;h</th></tr>
+<tr><td>1</td><td>2,400 / 4,160</td><td>120/240</td><td style="color:#2d6a4f;font-weight:700;">208V</td><td style="color:#2d6a4f;font-weight:700;">120V</td><td style="color:#2d6a4f;font-weight:700;">120V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">240V</td></tr>
+<tr><td>2</td><td>4,160 / 7,200</td><td>120/240</td><td style="color:#2d6a4f;font-weight:700;">208V</td><td style="color:#2d6a4f;font-weight:700;">120V</td><td style="color:#2d6a4f;font-weight:700;">120V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">240V</td></tr>
+<tr><td>3</td><td>12,000</td><td>120/240</td><td style="color:#2d6a4f;font-weight:700;">208V</td><td style="color:#2d6a4f;font-weight:700;">120V</td><td style="color:#2d6a4f;font-weight:700;">120V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">240V</td></tr>
+<tr><td>4</td><td>7,200 / 12,470</td><td>120/240</td><td style="color:#2d6a4f;font-weight:700;">208V</td><td style="color:#2d6a4f;font-weight:700;">120V</td><td style="color:#2d6a4f;font-weight:700;">120V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">240V</td></tr>
+<tr><td>5</td><td>14,400</td><td>240/480</td><td style="color:#2d6a4f;font-weight:700;">416V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">480V</td><td style="color:#2d6a4f;font-weight:700;">480V</td><td style="color:#2d6a4f;font-weight:700;">480V</td></tr>
+<tr><td>6</td><td>19,900</td><td>120/240</td><td style="color:#2d6a4f;font-weight:700;">208V</td><td style="color:#2d6a4f;font-weight:700;">120V</td><td style="color:#2d6a4f;font-weight:700;">120V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">240V</td><td style="color:#2d6a4f;font-weight:700;">240V</td></tr>
+</table>
+<p style="margin-top:.5rem;font-size:.82rem;color:#666;">n&ndash;p = neutral to power leg &nbsp;|&nbsp; n&ndash;h = neutral to hot leg &nbsp;|&nbsp; p&ndash;h = power leg to hot &nbsp;|&nbsp; h&ndash;h = hot to hot</p>
+</div>
+</div>
+
+<div class="page" id="key">
+<button class="keybtn" onclick="toggleKey()">Show / Hide Answer Key</button>
+<div class="akey" id="answerKey">
+<div class="klbl">Section 1 &mdash; Three-Phase Banking Fundamentals (Q1&ndash;12)</div>
+<div class="agrid">
+<div class="ai"><span>Q1</span>b. Three interconnected single-phase units</div>
+<div class="ai"><span>Q2</span>d. Easier and less expensive to replace one unit in a bank</div>
+<div class="ai"><span>Q3</span>b. Three single-phase transformers inside a single tank</div>
+<div class="ai"><span>Q4</span>b. Individual for single-phase OR banked for three-phase</div>
+<div class="ai"><span>Q5</span>c. Compare circuit &amp; service voltages with nameplate voltage rating</div>
+<div class="ai"><span>Q6</span>a. True</div>
+<div class="ai"><span>Q7</span>d. Oil type — not one of the six criteria</div>
+<div class="ai"><span>Q8</span>b. Usually one transformer of greater size — carries 2/3 of single-phase load and 1/3 of three-phase load</div>
+<div class="ai"><span>Q9</span>b. Larger transformer carries 2/3 of single-phase load and 1/3 of three-phase load</div>
+<div class="ai"><span>Q10</span>b. 200 kVA and smaller with primary 8,660V and below</div>
+<div class="ai"><span>Q11</span>c. Confusion for future lineworkers and serious safety concerns</div>
+<div class="ai"><span>Q12</span>c. De-rating required; lowest impedance unit carries more load and may be overloaded</div>
+</div>
+<div class="klbl">Section 2 &mdash; Delta &amp; Wye Connections (Q13&ndash;30)</div>
+<div class="agrid">
+<div class="ai"><span>Q13</span>b. Phase-to-phase (Delta) or phase-to-neutral (Wye)</div>
+<div class="ai"><span>Q14</span>b. A triangle or Greek letter Delta (&Delta;)</div>
+<div class="ai"><span>Q15</span>b. H1 connects to H2 "all the way around"</div>
+<div class="ai"><span>Q16</span>c. X1 connects to X3 "all the way around"</div>
+<div class="ai"><span>Q17</span>b. Coil voltage equals the line voltage</div>
+<div class="ai"><span>Q18</span>c. 1.732 times HIGHER than the coil current</div>
+<div class="ai"><span>Q19</span>c. Opposing phase conductors — no return through earth</div>
+<div class="ai"><span>Q20</span>b. H1s to phases, H2s connect together (may or may not be grounded)</div>
+<div class="ai"><span>Q21</span>b. Delta banks present the same physical appearance regardless of transformer polarity</div>
+<div class="ai"><span>Q22</span>c. 1.732</div>
+<div class="ai"><span>Q23</span>b. Coil current equals phase current</div>
+<div class="ai"><span>Q24</span>b. No current flow in the neutral</div>
+<div class="ai"><span>Q25</span>c. Phase-to-neutral</div>
+<div class="ai"><span>Q26</span>c. Phase-to-phase</div>
+<div class="ai"><span>Q27</span>c. Delta connections only</div>
+<div class="ai"><span>Q28</span>b. Transformers must have two primary bushings for Delta</div>
+<div class="ai"><span>Q29</span>b. H-1 and X-1 are always positive</div>
+<div class="ai"><span>Q30</span>b. Negative terminals all connected together; positive terminals each connected to their individual phase</div>
+</div>
+<div class="klbl">Section 3 &mdash; Open Banks (Q31&ndash;44)</div>
+<div class="agrid">
+<div class="ai"><span>Q31</span>b. With only two transformers, Delta or Wye is incomplete — one leg is open</div>
+<div class="ai"><span>Q32</span>c. 57.7%</div>
+<div class="ai"><span>Q33</span>b. Lighter transformer</div>
+<div class="ai"><span>Q34</span>c. Power transformer — smaller kVA</div>
+<div class="ai"><span>Q35</span>d. Usually higher kVA — handles bulk of lighting load and part of three-phase load</div>
+<div class="ai"><span>Q36</span>b. Open Wye</div>
+<div class="ai"><span>Q37</span>b. Open Delta</div>
+<div class="ai"><span>Q38</span>b. Single-phase load is predominant over three-phase load</div>
+<div class="ai"><span>Q39</span>b. Same as a Delta secondary utilizing three transformers</div>
+<div class="ai"><span>Q40</span>c. Temporarily re-wired as an open bank</div>
+<div class="ai"><span>Q41</span>b. Two primary phases and a system neutral</div>
+<div class="ai"><span>Q42</span>b. Construction methods, clearance requirements, squirrel/bird problems, and similar field factors</div>
+<div class="ai"><span>Q43</span>c. Three-phase power cannot be derived from an open bank if secondary is connected Open Wye</div>
+<div class="ai"><span>Q44</span>d. Only approximately 57.7% as efficient as a closed three-unit bank</div>
+</div>
+<div class="klbl">Section 4 &mdash; Voltage &amp; Current Calculations (Q45&ndash;50)</div>
+<div class="agrid">
+<div class="ai"><span>Q45</span>c. 7,200V (Delta: Coil V = System V)</div>
+<div class="ai"><span>Q46</span>b. 7,200V (12,470 &divide; 1.732 = 7,200V)</div>
+<div class="ai"><span>Q47</span>d. 69.3A (40 &times; 1.732 = 69.3A)</div>
+<div class="ai"><span>Q48</span>d. 40A (Wye: Coil Current = Phase Current)</div>
+<div class="ai"><span>Q49</span>b. Wye — 7,200V coil matches phase-to-neutral of 12,470V system</div>
+<div class="ai"><span>Q50</span>b. 120/240V</div>
+</div>
+</div>
+</div>
+
+<!-- QUICK REFERENCE PAGE -->
+<div class="page" id="ref">
+<div class="slbl" style="margin-top:0;">Quick Reference &mdash; Key Terms &amp; Concepts</div>
+
+<div class="qrs"><h3>Three-Phase Service &mdash; Two Methods</h3>
+<table class="qt"><tr><th>Method</th><th>Description</th><th>Preferred By Utilities?</th></tr>
+<tr><td><strong>One Three-Phase Transformer</strong></td><td>Three single-phase transformers inside one tank. Polarity and interconnections fixed inside.</td><td>No — only one application</td></tr>
+<tr><td><strong>Three Single-Phase Transformers (Banking)</strong></td><td>Three units interconnected. Less expensive to replace one failed unit.</td><td>Yes — most common method</td></tr></table></div>
+
+<div class="qrs"><h3>Six Criteria for Transformer Selection (Banking/Paralleling)</h3>
+<ol style="padding-left:1.2rem;margin-top:.4rem;font-size:.88rem;line-height:1.8;">
+<li>Circuit voltage</li><li>Service voltage</li><li>Transformer voltage rating</li><li>kVA ratings</li><li>Polarity</li><li>Impedance</li>
+</ol>
+<div class="wbox" style="margin-top:.6rem;"><strong>&#9888; Always test a transformer before selecting it — especially used transformers.</strong></div></div>
+
+<div class="qrs"><h3>kVA Rating Rules</h3>
+<table class="qt"><tr><th>Secondary Type</th><th>kVA Sizing Rule</th></tr>
+<tr><td><strong>Wye Secondary</strong></td><td>All three transformers equal size — single-phase load shared equally</td></tr>
+<tr><td><strong>Delta Secondary (combo loads)</strong></td><td>Usually one larger transformer — carries 2/3 of single-phase load and 1/3 of three-phase load</td></tr></table></div>
+
+<div class="qrs"><h3>Polarity Rules</h3>
+<table class="qt"><tr><th>Polarity</th><th>Standard</th><th>Positive Terminals</th></tr>
+<tr><td><strong>Additive</strong></td><td>200 kVA and smaller, primary 8,660V and below</td><td>H-1 and X-1</td></tr>
+<tr><td><strong>Subtractive</strong></td><td>All other transformers</td><td>H-1 and X-1</td></tr></table>
+<p style="margin-top:.5rem;font-size:.85rem;">Using different polarity transformers will work if connected correctly but causes confusion and safety concerns for future crews. A reversed polarity transformer in a bank causes extremely high current flow when energized.</p>
+<p style="margin-top:.3rem;font-size:.85rem;">In a <strong>Wye connection</strong>: negative polarity terminals (H-2, X-3) connect together; positive terminals (H-1, X-1) connect to phases.<br>In a <strong>Delta connection</strong>: positive terminal always connects to negative terminal, then to the phase.</p></div>
+
+<div class="qrs"><h3>Delta vs Wye &mdash; Side-by-Side Comparison</h3>
+<table class="qt"><tr><th>Feature</th><th>Delta (&Delta;)</th><th>Wye (Y)</th></tr>
+<tr><td>Schematic Shape</td><td>Triangle</td><td>Capital letter Y (star)</td></tr>
+<tr><td>Connection Type</td><td>Phase-to-phase</td><td>Phase-to-neutral</td></tr>
+<tr><td>Coil Voltage vs Line Voltage</td><td>Equal (Coil V = System V)</td><td>Coil V = System V &divide; 1.732</td></tr>
+<tr><td>Phase Current vs Coil Current</td><td>Phase I = Coil I &times; 1.732</td><td>Phase I = Coil I (equal)</td></tr>
+<tr><td>Primary: H1 connects to...</td><td>H2 "all the way around"</td><td>Phase (H2s connect together)</td></tr>
+<tr><td>Secondary: X1 connects to...</td><td>X3 "all the way around"</td><td>Hot legs (X2s grounded)</td></tr>
+<tr><td>Return path for current</td><td>Opposing phase conductors (no earth return)</td><td>Neutral conductor</td></tr>
+<tr><td>Neutral current if balanced</td><td>No neutral</td><td>Zero current in neutral</td></tr>
+<tr><td>Bushing requirement</td><td>Must have TWO primary bushings</td><td>Can use single-bushing transformers</td></tr></table></div>
+
+<div class="qrs"><h3>Primary Connection Rules</h3>
+<table class="qt"><tr><th>Rule</th><th>When to Apply</th><th>Exception</th></tr>
+<tr><td><strong>Connect WYE</strong></td><td>Primary coil voltage matches the phase-to-neutral voltage of the system</td><td>If transformer has only ONE number for primary voltage rating — use Delta only</td></tr>
+<tr><td><strong>Connect DELTA</strong></td><td>Primary coil voltage matches the phase-to-phase voltage of the system</td><td>Must have two primary bushings — cannot use single-bushing transformers for Delta</td></tr></table></div>
+
+<div class="qrs"><h3>Open Banks &mdash; Key Rules</h3>
+<ul>
+<li><strong>Open bank</strong> = two single-phase transformers banked together; one leg of the Delta or Wye is "open"</li>
+<li>Open banks are <strong>57.7% as efficient</strong> as closed (three-transformer) banks</li>
+<li>Used when <strong>single-phase load is larger</strong> than three-phase load</li>
+<li>Three-phase power <strong>CANNOT</strong> be derived from an open bank if the secondary is connected Open Wye</li>
+<li>Secondary is <strong>always Open Delta</strong> when delivering three-phase power from an open bank</li>
+<li>Primary can be Open Delta OR Open Wye depending on system voltage and nameplate</li>
+<li>If one transformer of a three-unit Delta secondary bank fails, the bank can be <strong>temporarily re-wired as an open bank</strong></li>
+</ul></div>
+
+<div class="qrs"><h3>Open Bank Transformer Roles</h3>
+<table class="qt"><tr><th>Transformer</th><th>Role</th><th>kVA Size</th></tr>
+<tr><td><strong>Lighter Transformer</strong></td><td>Supplies bulk of the single-phase "lighting" load and part of the three-phase load</td><td>Larger kVA</td></tr>
+<tr><td><strong>Power Transformer</strong></td><td>Provides the third phase — the "power leg"</td><td>Smaller kVA</td></tr></table></div>
+
+<div class="qrs"><h3>Open Wye &ndash; Open Delta Connection Types</h3>
+<table class="qt"><tr><th>Connection</th><th>Primary Bushings</th><th>Secondary Bushings</th><th>Output Voltage</th></tr>
+<tr><td><strong>Same-Opposite</strong></td><td>H2 to H2 connected and grounded ("same")</td><td>X1 to X3 connected ("opposite")</td><td>Same as closed bank</td></tr>
+<tr><td><strong>Opposite-Same</strong></td><td>H2 to H1 connected and grounded ("opposite")</td><td>X1 to X1 connected ("same")</td><td>Same as closed bank</td></tr></table>
+<p style="margin-top:.5rem;font-size:.85rem;">Both connections produce identical output voltages. Utility choice depends on construction methods, clearance, and squirrel/bird concerns.</p></div>
+
+<div class="qrs"><h3>Secondary Voltage Reference &mdash; Open Delta Bank</h3>
+<table class="qt"><tr><th>Measurement</th><th>120/240V Service</th><th>240/480V Service</th></tr>
+<tr><td>n to p (neutral to power leg)</td><td>208V</td><td>416V</td></tr>
+<tr><td>n to h (neutral to hot leg)</td><td>120V</td><td>240V</td></tr>
+<tr><td>p to h (power leg to hot)</td><td>240V</td><td>480V</td></tr>
+<tr><td>h to h (hot to hot)</td><td>240V</td><td>480V</td></tr></table></div>
+
+<div class="qrs"><h3>Key Formulas</h3>
+<table class="qt"><tr><th>Formula</th><th>Delta</th><th>Wye</th></tr>
+<tr><td><strong>Coil Voltage</strong></td><td>Coil V = System V</td><td>Coil V = System V &divide; 1.732</td></tr>
+<tr><td><strong>System Voltage</strong></td><td>System V = Coil V</td><td>System V = Coil V &times; 1.732</td></tr>
+<tr><td><strong>Phase Current</strong></td><td>Phase I = Coil I &times; 1.732</td><td>Phase I = Coil I</td></tr>
+<tr><td><strong>Coil Current</strong></td><td>Coil I = Phase I &divide; 1.732</td><td>Coil I = Phase I</td></tr></table></div>
+
+<div class="qrs"><h3>Impedance Mismatch Warning</h3>
+<p>Mismatched impedances between paralleled or banked transformers require a de-rating because the load does not divide in proportion to the kVA ratings. The <strong>lowest impedance transformer supplies the greatest share</strong> of the load and may become overloaded.</p>
+<div class="wbox"><strong>&#9888; Every effort should be made to select transformers with the same impedances when paralleling or banking.</strong></div></div>
+</div>
+
+</main>
+<footer>Northwest Lineman College &middot; Three-Phase Connections &amp; Open Banks Study Guide &middot; PhaseShift Education</footer>
+
+<script>
+const answers={q1:"b",q2:"d",q3:"b",q4:"b",q5:"c",q6:"a",q7:"d",q8:"b",q9:"b",q10:"b",q11:"c",q12:"c",q13:"b",q14:"b",q15:"b",q16:"c",q17:"b",q18:"c",q19:"c",q20:"b",q21:"b",q22:"c",q23:"b",q24:"b",q25:"c",q26:"c",q27:"c",q28:"b",q29:"b",q30:"b",q31:"b",q32:"c",q33:"b",q34:"c",q35:"d",q36:"b",q37:"b",q38:"b",q39:"b",q40:"c",q41:"b",q42:"b",q43:"c",q44:"d",q45:"c",q46:"b",q47:"d",q48:"d",q49:"b",q50:"b"};
+function checkAnswers(){
+  let score=0;
+  for(let i=1;i<=50;i++){
+    const sel=document.querySelector(`input[name="q${i}"]:checked`);
+    const block=document.getElementById("qb"+i);
+    const fb=document.getElementById("fb"+i);
+    block.classList.remove("correct","wrong");
+    fb.classList.remove("show","cfb","wfb");
+    const correct=answers["q"+i];
+    if(sel&&sel.value===correct){score++;block.classList.add("correct");fb.textContent="\u2714 Correct!";fb.classList.add("show","cfb");}
+    else{block.classList.add("wrong");fb.textContent="\u2718 Incorrect. Correct answer: "+correct.toUpperCase();fb.classList.add("show","wfb");}
+  }
+  const pct=Math.round(score/50*100);
+  let msg="Keep studying — review the Quick Reference tab for help.";
+  if(pct>=90)msg="Excellent work! You are ready for the exam.";
+  else if(pct>=75)msg="Good job! Review the questions you missed.";
+  else if(pct>=60)msg="Passing range — focus on the topics you missed.";
+  const box=document.getElementById("scorebox");
+  document.getElementById("scoretext").textContent=score+"/50 ("+pct+"%)";
+  document.getElementById("scoremsg").textContent=msg;
+  box.classList.add("show");
+  box.scrollIntoView({behavior:"smooth"});
+}
+function showPage(id,btn){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  window.scrollTo(0,0);
+}
+function toggleKey(){document.getElementById("answerKey").classList.toggle("visible");}
+</script>
+</body>
+</html>
